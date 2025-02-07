@@ -42,4 +42,8 @@ class FakePerformanceRepository : PerformanceRepository {
         store.put(newPerformance.getId(), newPerformance)
         return newPerformance
     }
+
+    override fun isExistsById(id: Long): Boolean {
+        return store.containsKey(id)
+    }
 }

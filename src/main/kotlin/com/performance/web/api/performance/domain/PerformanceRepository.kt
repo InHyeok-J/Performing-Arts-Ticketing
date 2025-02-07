@@ -9,4 +9,6 @@ interface PerformanceRepository : BaseRepository<Performance> {
     fun findAll(): List<Performance>
 
     fun save(performance: Performance): Performance
+
+    fun isExistsById(id: Long): Boolean
 }

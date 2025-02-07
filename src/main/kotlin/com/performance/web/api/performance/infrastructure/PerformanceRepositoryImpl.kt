@@ -27,4 +27,8 @@ class PerformanceRepositoryImpl(
     override fun save(performance: Performance): Performance {
         return performanceJpaRepository.save(PerformanceEntity.fromDomain(performance)).toDomain()
     }
+
+    override fun isExistsById(id: Long): Boolean {
+        return performanceJpaRepository.existsById(id)
+    }
 }
