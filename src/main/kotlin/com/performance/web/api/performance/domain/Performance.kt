@@ -2,6 +2,7 @@ package com.performance.web.api.performance.domain
 
 import com.performance.web.api.common.domain.BusinessException
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class Performance(
     id: Long = 0L,
@@ -10,7 +11,7 @@ class Performance(
     startDate: LocalDate,
     endDate: LocalDate,
     description: String,
-    seatClasses: List<PerformanceSeatClass> = mutableListOf()
+    seatClasses: List<PerformanceSeatClass> = mutableListOf(),
 ) {
 
     private val _id: Long = id

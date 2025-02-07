@@ -3,6 +3,7 @@ package com.performance.web.api.performance.controller.dto
 import com.performance.web.api.performance.domain.Performance
 import com.performance.web.api.performance.domain.PerformanceSeatClass
 import java.time.LocalDate
+import java.time.LocalDateTime
 
 class PerformanceDetailApiResponse(
 
@@ -12,7 +13,7 @@ class PerformanceDetailApiResponse(
     val endDate: LocalDate,
     val description: String,
     val runTime: Long,
-    val seatClassInfos: List<SeatClassApiResponse>
+    val seatClassInfos: List<SeatClassApiResponse>,
 ) {
 
     data class SeatClassApiResponse(

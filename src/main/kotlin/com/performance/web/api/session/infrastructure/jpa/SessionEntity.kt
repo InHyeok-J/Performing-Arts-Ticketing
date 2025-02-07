@@ -1,6 +1,5 @@
 package com.performance.web.api.session.infrastructure.jpa
 
-import com.performance.web.api.common.infrastructure.jpa.BaseTimeEntity
 import com.performance.web.api.session.domain.Session
 import jakarta.persistence.*
 import java.time.LocalDateTime
@@ -19,7 +18,7 @@ class SessionEntity (
     @Column(nullable = false)
     var startDateTime: LocalDateTime
 
-    ) : BaseTimeEntity() {
+    )  {
 
 
     fun toDomain(): Session {
@@ -27,8 +26,6 @@ class SessionEntity (
             id = id!!,
             performanceId = performanceId,
             startDateTime = startDateTime,
-            createdAt = super.createdAt,
-            updatedAt = super.updatedAt
         )
     }
 

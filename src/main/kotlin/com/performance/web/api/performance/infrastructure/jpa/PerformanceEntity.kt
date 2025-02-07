@@ -40,22 +40,24 @@ class PerformanceEntity(
             startDate = startDate,
             endDate = endDate,
             description = description,
-            seatClasses = seatClasses.map { it.toDomain() } // Lazy 로딩된 seatClasses 처리
-        )
+            seatClasses = seatClasses.map { it.toDomain() },
+            )
     }
 
     companion object {
 
         fun fromDomain(performance: Performance): PerformanceEntity {
-            return PerformanceEntity(
+            val performanceEntity = PerformanceEntity(
                 id = performance.getId(),
                 name = performance.getName(),
                 runTime = performance.getRunTime(),
                 startDate = performance.getStartDate(),
                 endDate = performance.getEndDate(),
                 description = performance.getDescription(),
-                seatClasses = performance.getSeatClasses().map { PerformanceSeatClassEntity.fromDomain(it) }.toMutableSet(),
             )
+            val seatClassEntities = performance.getSeatClasses().map { PerformanceSeatClassEntity.fromDomain(it, performanceEntity) }
+            performanceEntity.seatClasses = seatClassEntities.toMutableSet()
+            return performanceEntity
         }
     }
 }

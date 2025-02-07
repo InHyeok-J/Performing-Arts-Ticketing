@@ -33,11 +33,12 @@ class PerformanceSeatClassEntity(
     }
 
     companion object {
-        fun fromDomain(seatClass: PerformanceSeatClass): PerformanceSeatClassEntity {
+        fun fromDomain(seatClass: PerformanceSeatClass, performance: PerformanceEntity?): PerformanceSeatClassEntity {
             return PerformanceSeatClassEntity(
                 id = seatClass.getId(),
                 price = seatClass.getPrice().longValue(),
-                classType = seatClass.getClassType()
+                classType = seatClass.getClassType(),
+                performance = performance
             )
         }
     }
