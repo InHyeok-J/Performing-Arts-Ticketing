@@ -35,4 +35,8 @@ class Performance(
         _seatClasses.find { it.getId() == performanceSeatClassId }
             ?: throw BusinessException("$performanceSeatClassId 에 해당하는 SeatClass가 없습니다. ")
 
+    fun checkClassId(seatClassId: Long) {
+        _seatClasses.find { it.getId() == seatClassId } ?: throw BusinessException("${seatClassId} 에 해당하는 performanceSeatClass 가 없습니다 ")
+    }
+
 }

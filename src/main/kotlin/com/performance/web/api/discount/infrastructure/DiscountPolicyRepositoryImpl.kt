@@ -3,7 +3,7 @@ package com.performance.web.api.discount.infrastructure
 import com.performance.web.api.discount.domain.DiscountPolicy
 import com.performance.web.api.discount.domain.DiscountPolicyRepository
 import com.performance.web.api.discount.infrastructure.jpa.DiscountPolicyJpaRepository
-import com.performance.web.api.discount.infrastructure.jpa.mapper.DiscountPolicyMapper
+import com.performance.web.api.discount.infrastructure.jpa.mapper.DiscountPolicyEntityMapper
 import org.springframework.stereotype.Component
 import java.util.*
 
@@ -21,6 +21,6 @@ class DiscountPolicyRepositoryImpl(
     }
 
     override fun save(policy: DiscountPolicy): DiscountPolicy {
-        return discountPolicyJpaRepository.save(DiscountPolicyMapper.fromDomainToEntity(policy)).toDomain()
+        return discountPolicyJpaRepository.save(DiscountPolicyEntityMapper.fromDomainToEntity(policy)).toDomain()
     }
 }

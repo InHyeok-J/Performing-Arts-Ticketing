@@ -5,7 +5,7 @@ import com.performance.web.api.discount.domain.PercentDiscountPolicy
 import com.performance.web.api.discount.infrastructure.jpa.DiscountPolicyEntity
 import com.performance.web.api.discount.infrastructure.jpa.PercentDiscountPolicyEntity
 
-class DiscountPolicyMapper {
+class DiscountPolicyEntityMapper {
 
     companion object {
 
@@ -18,15 +18,17 @@ class DiscountPolicyMapper {
 
 
         private fun fromPercentToEntity(percentDiscountPolicy: PercentDiscountPolicy): PercentDiscountPolicyEntity {
-            return PercentDiscountPolicyEntity(
+            val policyEntity = PercentDiscountPolicyEntity(
                 id = percentDiscountPolicy.getId(),
                 name = percentDiscountPolicy.getName(),
-                conditions = percentDiscountPolicy.getConditions()
-                    .map { DiscountConditionMapper.fromDomainToEntity(it) }
-                    .toMutableList(),
                 percent = percentDiscountPolicy.getPercent(),
                 performanceSeatClassId = percentDiscountPolicy.getPerformanceSeatClassId(),
             )
+            policyEntity.conditions = percentDiscountPolicy.getConditions()
+                .map { DiscountConditionEntityMapper.fromDomainToEntity(it, policyEntity) }
+                .toMutableList();
+
+            return policyEntity
         }
     }
 }
