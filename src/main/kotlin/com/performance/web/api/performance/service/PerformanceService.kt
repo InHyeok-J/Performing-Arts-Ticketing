@@ -5,6 +5,7 @@ import com.performance.web.api.discount.domain.DiscountPolicy
 import com.performance.web.api.discount.domain.DiscountPolicyRepository
 import com.performance.web.api.performance.domain.Performance
 import com.performance.web.api.performance.domain.PerformanceRepository
+import com.performance.web.api.performance.service.dto.PerformanceCreateCommand
 import com.performance.web.api.performance.service.dto.PerformanceDiscountResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -45,5 +46,12 @@ class PerformanceService(
                 discountPolies = discountGroupByPerformanceIds[it.getId()] ?: emptyList()
             )
         }
+    }
+
+
+    @Transactional
+    fun createPerformance(performanceCreateCommand: PerformanceCreateCommand) : Performance {
+        val performance = performanceCreateCommand.toEntity()
+        return performanceRepository.save(performance)
     }
 }

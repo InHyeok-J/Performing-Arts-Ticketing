@@ -1,5 +1,6 @@
 package com.performance.web.api.performance.controller
 
+import com.performance.web.api.performance.controller.dto.PerformanceCreateApiRequest
 import com.performance.web.api.performance.controller.dto.PerformanceDetailApiResponse
 import com.performance.web.api.performance.controller.dto.PerformanceDiscountApiResponse
 import com.performance.web.api.performance.controller.dto.PerformanceListApiResponse
@@ -7,8 +8,11 @@ import com.performance.web.api.performance.service.PerformanceService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
+import org.springframework.web.bind.annotation.PostMapping
+import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.net.URI
 
 @RestController
 @RequestMapping("/api/performances")
@@ -47,4 +51,12 @@ class PerformanceController(
             .body(result.map { PerformanceDiscountApiResponse.from(it) })
     }
 
+
+    @PostMapping
+    fun createPerformance(@RequestBody performanceCreateApiRequest: PerformanceCreateApiRequest):ResponseEntity<PerformanceDetailApiResponse> {
+        val result = performanceService.createPerformance(performanceCreateApiRequest.toCommand())
+        val uri = URI.create(result.getId().toString())
+        return ResponseEntity.created(uri)
+            .body(PerformanceDetailApiResponse.from(result))
+    }
 }

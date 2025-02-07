@@ -27,7 +27,7 @@ class PerformanceEntity(
     @Column(nullable = false)
     var description: String,
 
-    @OneToMany(mappedBy = "performance", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "performance", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     var seatClasses: MutableSet<PerformanceSeatClassEntity> = mutableSetOf(),
 ) {
 
