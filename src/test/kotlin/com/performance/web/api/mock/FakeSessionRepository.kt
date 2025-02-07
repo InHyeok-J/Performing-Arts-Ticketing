@@ -22,4 +22,8 @@ class FakeSessionRepository : SessionRepository {
         store.put(newSession.getId(), newSession);
         return newSession
     }
+
+    override fun findAll(): List<Session> {
+        return store.values.toList()
+    }
 }
