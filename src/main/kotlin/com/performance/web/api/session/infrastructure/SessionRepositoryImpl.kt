@@ -20,4 +20,8 @@ class SessionRepositoryImpl(
     override fun save(session: Session):Session {
         return sessionJpaRepository.save(SessionEntity.fromDomain(session)).toDomain()
     }
+
+    override fun findAll(): List<Session> {
+        return sessionJpaRepository.findAll().map { it.toDomain() }
+    }
 }
