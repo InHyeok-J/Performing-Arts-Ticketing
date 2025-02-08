@@ -24,4 +24,8 @@ class SessionRepositoryImpl(
     override fun findAll(): List<Session> {
         return sessionJpaRepository.findAll().map { it.toDomain() }
     }
+
+    override fun existById(id: Long): Boolean {
+        return sessionJpaRepository.existsById(id)
+    }
 }

@@ -26,4 +26,8 @@ class FakeSessionRepository : SessionRepository {
     override fun findAll(): List<Session> {
         return store.values.toList()
     }
+
+    override fun existById(id: Long): Boolean {
+        return store.containsKey(id)
+    }
 }

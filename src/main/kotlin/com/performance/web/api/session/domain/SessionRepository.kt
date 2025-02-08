@@ -6,4 +6,6 @@ interface SessionRepository : BaseRepository<Session> {
     fun save(session: Session): Session
 
     fun findAll(): List<Session>
+
+    fun existById(id:Long): Boolean
 }

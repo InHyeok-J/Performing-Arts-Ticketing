@@ -24,4 +24,8 @@ class SeatRepositoryImpl(
     override fun saveAll(seats: List<Seat>): List<Seat> {
         return seatJpaRepository.saveAll( seats.map { SeatEntity.fromDomain(it) }).map { it.toDomain() }
     }
+
+    override fun findAllBySessionId(sessionId: Long): List<Seat> {
+        return seatJpaRepository.findAllBySessionId(sessionId).map { it.toDomain() }
+    }
 }

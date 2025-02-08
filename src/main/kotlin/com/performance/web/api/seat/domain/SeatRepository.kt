@@ -9,4 +9,6 @@ interface SeatRepository : BaseRepository<Seat> {
     fun save(seat: Seat): Seat
 
     fun saveAll(seats: List<Seat>): List<Seat>
+
+    fun findAllBySessionId(sessionId: Long): List<Seat>
 }

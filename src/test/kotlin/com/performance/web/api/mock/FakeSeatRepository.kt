@@ -33,4 +33,8 @@ class FakeSeatRepository: SeatRepository {
         }
         return list
     }
+
+    override fun findAllBySessionId(sessionId: Long): List<Seat> {
+        return store.values.toList().filter { it.getSessionId() == sessionId }
+    }
 }
