@@ -12,7 +12,8 @@ class Seat(
     seatClass: SeatClass,
     seatStatus: SeatStatus,
     seatPosition: SeatPosition,
-    sessionId: Long
+    sessionId: Long,
+    version: Int,
 ) {
 
     private val _id: Long = id
@@ -20,6 +21,7 @@ class Seat(
     private var _seatStatus: SeatStatus = seatStatus
     private val _seatPosition: SeatPosition = seatPosition
     private val _sessionId: Long = sessionId
+    private val _version: Int = version
 
     fun reserveTicket(
         discountPolicy: DiscountPolicy,
@@ -50,4 +52,6 @@ class Seat(
     fun getSeatPosition(): SeatPosition = _seatPosition
 
     fun getSessionId(): Long = _sessionId
+
+    fun getVersion(): Int = _version
 }

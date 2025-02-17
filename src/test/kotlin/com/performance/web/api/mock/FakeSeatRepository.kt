@@ -19,7 +19,8 @@ class FakeSeatRepository: SeatRepository {
             seatClass = seat.getSeatClass(),
             seatStatus = seat.getSeatStatus(),
             seatPosition = seat.getSeatPosition(),
-            sessionId = seat.getSessionId()
+            sessionId = seat.getSessionId(),
+            version = seat.getVersion(),
         )
 
         store.put(newSeat.getId(), newSeat)

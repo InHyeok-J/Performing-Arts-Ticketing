@@ -1,7 +1,6 @@
 package com.performance.web.api.reservation.service
 
 import com.performance.web.api.common.domain.Money
-import com.performance.web.api.common.domain.ResourceNotFoundException
 import com.performance.web.api.discount.domain.DiscountPolicySelector
 import com.performance.web.api.discount.domain.PercentDiscountPolicy
 import com.performance.web.api.member.domain.Member
@@ -16,12 +15,10 @@ import com.performance.web.api.seat.domain.SeatPosition
 import com.performance.web.api.seat.domain.SeatStatus
 import com.performance.web.api.session.domain.Session
 import org.assertj.core.api.Assertions.assertThat
-import org.assertj.core.api.Assertions.assertThatThrownBy
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 
 class ReservationServiceTest {
 
@@ -48,7 +45,8 @@ class ReservationServiceTest {
                 seatClass = SeatClass(price = Money.of(10000), classType = "VIP"),
                 seatPosition = SeatPosition(1,1,1),
                 seatStatus = SeatStatus.UN_RESERVED,
-                sessionId = 1L
+                sessionId = 1L,
+                version = 1,
             )
         )
         seatRepository.save(
@@ -56,7 +54,8 @@ class ReservationServiceTest {
                 seatClass = SeatClass(price = Money.of(10000), classType = "VIP"),
                 seatPosition = SeatPosition(1,2,1),
                 seatStatus = SeatStatus.UN_RESERVED,
-                sessionId = 1L
+                sessionId = 1L,
+                version = 1
             )
         )
         discountPolicyRepository.save(
@@ -138,7 +137,6 @@ class ReservationServiceTest {
             ),
         )
 
-
         // when
         val result = reservationService.reserve(command)
 
@@ -148,48 +146,4 @@ class ReservationServiceTest {
         assertThat(result.getTotalAmount()).isEqualTo(Money.of(20000))
     }
 
-
-    @Test
-    fun `findById 시 없는 id로 요청하면 예외를 반환한다`() {
-        //given
-        val id = 2L
-
-        //when
-        //then
-        assertThatThrownBy {
-            reservationService.findById(id);
-        }.isInstanceOf(ResourceNotFoundException::class.java)
-    }
-
-
-    @Test
-    fun `findById시 조회가 성공하면 정상적으로 예매를 반환한다`(){
-        // givne
-        reservationRepository.save(
-            Reservation(
-                sessionId = 1L,
-                performanceSessionInfo = PerformanceSessionInfo(
-                    performanceName = "공연",
-                    sessionStartDate = LocalDate.now(),
-                    sessionStartTime = LocalTime.now(),
-                    sessionEndTime = LocalTime.now(),
-                ),
-                customer = Customer(1L),
-                tickets = listOf(Ticket(
-                    totalAmount = Money.of(10000),
-                    regularPrice = Money.of(10000),
-                    ticketSeatInfo = TicketSeatInfo(1,1,1,"VIP"),
-                    discountInfo = DiscountInfo("할인 적용 X"),
-                ))
-            )
-        )
-
-        //when
-        val result = reservationService.findById(1L)
-
-        assertThat(result.getId()).isEqualTo(1L)
-        assertThat(result.getTotalAmount()).isEqualTo(Money.of(10000))
-        assertThat(result.getCustomer().getId()).isEqualTo(1L)
-        assertThat(result.getTickets().size).isEqualTo(1)
-    }
 }

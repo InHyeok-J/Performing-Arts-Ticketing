@@ -1,6 +1,5 @@
 package com.performance.web.api.seat.infrastructure.jpa
 
-import com.performance.web.api.session.infrastructure.jpa.SessionEntity
 import com.performance.web.api.seat.domain.Seat
 import jakarta.persistence.*
 
@@ -21,8 +20,10 @@ class SeatEntity(
     @Embedded
     var seatClass: SeatClassEntity,
 
-    var sessionId : Long
+    var sessionId : Long,
 
+    @Version
+    var version: Int,
     ) {
 
     fun toDomain(): Seat {
@@ -32,7 +33,8 @@ class SeatEntity(
             seatClass = seatClass.toDomain(),
             seatStatus = seatStatus.toDomain(),
             seatPosition = seatPosition.toDomain(),
-            sessionId = sessionId
+            sessionId = sessionId,
+            version = version
         )
     }
 
@@ -46,6 +48,7 @@ class SeatEntity(
                 seatPosition = SeatPositionEntity.fromDomain(seat.getSeatPosition()),
                 seatClass = SeatClassEntity.fromDomain(seat.getSeatClass()),
                 sessionId = seat.getSessionId(),
+                version = seat.getVersion()
             )
         }
     }

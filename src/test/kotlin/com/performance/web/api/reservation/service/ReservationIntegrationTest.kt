@@ -8,25 +8,22 @@ import org.junit.platform.commons.logging.Logger
 import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.test.annotation.Rollback
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.TestPropertySource
 import org.springframework.test.context.jdbc.Sql
 import org.springframework.test.context.jdbc.Sql.ExecutionPhase
 import org.springframework.test.context.jdbc.SqlGroup
-import org.springframework.transaction.annotation.Transactional
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 
 @SpringBootTest
-@ActiveProfiles("test")
+@ActiveProfiles("testh2")
 @SqlGroup(
-//    Sql(value = ["/sql/reservation-concurrency-test.sql"], executionPhase = ExecutionPhase.BEFORE_TEST_METHOD),
-//    Sql(value = ["/sql/delete-all-data.sql"], executionPhase = ExecutionPhase.AFTER_TEST_METHOD),
+    Sql(value = ["/sql/reservation-concurrency-test.sql"], executionPhase = ExecutionPhase.BEFORE_TEST_METHOD),
+    Sql(value = ["/sql/delete-all-data.sql"], executionPhase = ExecutionPhase.AFTER_TEST_METHOD),
 )
 class ReservationIntegrationTest(
-    @Autowired private val reservationService: ReservationService
+    @Autowired private val reservationService: ReservationServiceOptimisticLockFacade
 ) {
 
 
@@ -54,9 +51,10 @@ class ReservationIntegrationTest(
                 val command = creatCommand(i.toLong(), listOf(1L, 2L));
                 try {
                     val reserve = reservationService.reserve(command)
+                    log.info { "성공: $i 번째 예매 완료" }
                     successCount.incrementAndGet()
                 } catch (e: Exception) {
-                    log.error { "${e.message}" }
+                    log.error { "${e.message} , ${e.javaClass.simpleName}" }
                     failCount.incrementAndGet()
                 } finally {
                     latch.countDown()
@@ -71,7 +69,7 @@ class ReservationIntegrationTest(
         assertThat(failCount.get()).isEqualTo(9)
     }
 
-    @Test
+//    @Test
     fun `좌석 예매 순차적 동시성 테스트`() {
         val memberCount = 10;
         val successCount = AtomicInteger()

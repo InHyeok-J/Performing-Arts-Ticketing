@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
 
 @Service
+@Transactional
 class ReservationService(
     private val sessionRepository: SessionRepository,
     private val performanceRepository: PerformanceRepository,
@@ -24,14 +25,13 @@ class ReservationService(
     private val ticketIssuer: TicketIssuer,
 ) {
 
-    @Transactional
     fun reserve(reservationCommand: ReservationCommand): Reservation {
         val member = memberRepository.findByIdThrown(reservationCommand.customerId)
         val session = sessionRepository.findByIdThrown(reservationCommand.sessionId)
         val performance = performanceRepository.findByIdThrown(session.getPerformanceId())
 
         // TODO : discountFactor 를 생성하는 책임을 가진 클래스를 추가한다
-        val discountFactor =  DiscountFactor(
+        val discountFactor = DiscountFactor(
             reserveDateTime = LocalDateTime.now(),
             reservationCommand.seatCommands.size,
         )
@@ -40,13 +40,14 @@ class ReservationService(
             discountFactor = discountFactor,
             commands = convertSeatReserveCommandList(reservationCommand.seatCommands),
         )
+
+
         val reservation = Reservation(
             sessionId = session.getId(),
             performanceSessionInfo = PerformanceSessionInfo.create(performance, session),
             customer = Customer(member.getId()),
             tickets = tickets,
         )
-
         return reservationRepository.save(reservation)
     }
 
@@ -61,7 +62,4 @@ class ReservationService(
     }
 
 
-    fun findById(reservationId: Long): Reservation {
-        return reservationRepository.findByIdThrown(reservationId)
-    }
 }
