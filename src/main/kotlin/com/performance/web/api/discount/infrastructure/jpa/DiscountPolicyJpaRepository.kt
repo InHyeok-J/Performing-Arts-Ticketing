@@ -9,7 +9,7 @@ interface DiscountPolicyJpaRepository : JpaRepository<DiscountPolicyEntity, Long
 
     @Query(
         "SELECT d FROM DiscountPolicyEntity d " +
-            "JOIN FETCH d.conditions dc " +
+            "LEFT JOIN FETCH d.conditions dc " +
             "WHERE d.id = :discountPolicyId ",
     )
     fun findByIdWithConditions(@Param("discountPolicyId") id: Long): Optional<DiscountPolicyEntity>
@@ -17,7 +17,7 @@ interface DiscountPolicyJpaRepository : JpaRepository<DiscountPolicyEntity, Long
 
     @Query(
         "SELECT d FROM DiscountPolicyEntity d " +
-            "JOIN FETCH d.conditions dc " +
+            "LEFT JOIN FETCH d.conditions dc " +
             "JOIN PerformanceSeatClassEntity ps ON ps.id = d.performanceSeatClassId " +
             "WHERE ps.id IN :seatClassIds ",
     )
