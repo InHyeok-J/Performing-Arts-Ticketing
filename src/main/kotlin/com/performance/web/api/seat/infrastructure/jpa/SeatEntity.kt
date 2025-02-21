@@ -22,8 +22,6 @@ class SeatEntity(
 
     var sessionId : Long,
 
-    @Version
-    var version: Int,
     ) {
 
     fun toDomain(): Seat {
@@ -34,7 +32,6 @@ class SeatEntity(
             seatStatus = seatStatus.toDomain(),
             seatPosition = seatPosition.toDomain(),
             sessionId = sessionId,
-            version = version
         )
     }
 
@@ -48,7 +45,6 @@ class SeatEntity(
                 seatPosition = SeatPositionEntity.fromDomain(seat.getSeatPosition()),
                 seatClass = SeatClassEntity.fromDomain(seat.getSeatClass()),
                 sessionId = seat.getSessionId(),
-                version = seat.getVersion()
             )
         }
     }

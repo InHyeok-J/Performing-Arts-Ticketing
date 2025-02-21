@@ -20,7 +20,6 @@ class FakeSeatRepository: SeatRepository {
             seatStatus = seat.getSeatStatus(),
             seatPosition = seat.getSeatPosition(),
             sessionId = seat.getSessionId(),
-            version = seat.getVersion(),
         )
 
         store.put(newSeat.getId(), newSeat)
@@ -37,5 +36,9 @@ class FakeSeatRepository: SeatRepository {
 
     override fun findAllBySessionId(sessionId: Long): List<Seat> {
         return store.values.toList().filter { it.getSessionId() == sessionId }
+    }
+
+    override fun findByIdWithLock(id: Long): Optional<Seat> {
+        return this.findById(id)
     }
 }

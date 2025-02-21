@@ -20,11 +20,11 @@ values ('VIP', 10000, 1),
 insert into `performance_session`(`id`, `performance_id`, `start_date_time`)
 values (1, 1, '2025-02-08 09:00:00');
 
-insert into `seat`(`class_type`, `price`, `session_id`, `seat_status`, `row_index`, `column_index`, `floor`, `version`)
-values ('VIP', 10000, 1, 'UN_RESERVE', 1, 1, 1, 0),
-       ('VIP', 10000, 1, 'UN_RESERVE', 1, 2, 1, 0),
-       ('R', 5000, 1, 'UN_RESERVE', 1, 3, 1, 0),
-       ('R', 5000, 1, 'UN_RESERVE', 1, 4, 1, 0);
+insert into `seat`(`class_type`, `price`, `session_id`, `seat_status`, `row_index`, `column_index`, `floor`)
+values ('VIP', 10000, 1, 'UN_RESERVE', 1, 1, 1),
+       ('VIP', 10000, 1, 'UN_RESERVE', 1, 2, 1),
+       ('R', 5000, 1, 'UN_RESERVE', 1, 3, 1),
+       ('R', 5000, 1, 'UN_RESERVE', 1, 4, 1);
 
 insert into `discount_policy`(`policy_type`, `name`, `performance_seat_class_id`, `percent`)
 values ('PERCENT', '특가 무조건 할인!', 1, 0.1),

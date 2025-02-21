@@ -46,7 +46,6 @@ class ReservationServiceTest {
                 seatPosition = SeatPosition(1,1,1),
                 seatStatus = SeatStatus.UN_RESERVED,
                 sessionId = 1L,
-                version = 1,
             )
         )
         seatRepository.save(
@@ -55,7 +54,6 @@ class ReservationServiceTest {
                 seatPosition = SeatPosition(1,2,1),
                 seatStatus = SeatStatus.UN_RESERVED,
                 sessionId = 1L,
-                version = 1
             )
         )
         discountPolicyRepository.save(

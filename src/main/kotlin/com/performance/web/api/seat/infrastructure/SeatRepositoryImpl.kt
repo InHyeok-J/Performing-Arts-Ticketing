@@ -28,4 +28,8 @@ class SeatRepositoryImpl(
     override fun findAllBySessionId(sessionId: Long): List<Seat> {
         return seatJpaRepository.findAllBySessionId(sessionId).map { it.toDomain() }
     }
+
+    override fun findByIdWithLock(id: Long): Optional<Seat> {
+        return seatJpaRepository.findByIdWithLock(id).map { it.toDomain() }
+    }
 }

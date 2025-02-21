@@ -53,7 +53,9 @@ class ReservationService(
 
     private fun convertSeatReserveCommandList(seatCommand: List<ReservationCommand.ReservationSeatCommand>): List<TicketIssuer.SeatReserveCommand> {
         return seatCommand.map {
-            val seat = seatRepository.findByIdThrown(it.seatId)
+            val seat = seatRepository.findByIdWithLock(it.seatId).orElseThrow{
+                throw ResourceNotFoundException("Seat ${it.seatId} 을 찾을 수 없습니다. ")
+            }
             val discountPolicy = discountPolicySelector.findById(it.discountPolicyId).orElseThrow {
                 throw ResourceNotFoundException("$it.discountPolicyId 의 DiscountPolicy 를 찾을 수 없습니다.")
             }
