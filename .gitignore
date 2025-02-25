@@ -17,6 +17,7 @@ bin/
 !**/src/main/**/bin/
 !**/src/test/**/bin/
 
+src/main/kotlin/com/performance/web/api/common/dummy/
 application.properties
 ### IntelliJ IDEA ###
 .idea

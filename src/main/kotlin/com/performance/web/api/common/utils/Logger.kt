@@ -1,0 +1,37 @@
+package com.performance.web.api.common.utils
+
+import io.github.oshai.kotlinlogging.KotlinLogging
+
+object Logger {
+    private val logger = KotlinLogging.logger {}
+
+    // only use develop
+    fun info(message: String) {
+        logger.info { message }
+    }
+
+    fun info(context: String, message: String, data: Any? = null) {
+        logger.info {
+            objectMapper.writeValueAsString(
+                mapOf(
+                    "context" to context,
+                    "message" to message,
+                    "data" to data,
+                ),
+            )
+        }
+    }
+
+    fun error(context: String, message: String, throwable: Throwable? = null) {
+        logger.error {
+            objectMapper.writeValueAsString(
+                mapOf(
+                    "context" to context,
+                    "message" to message,
+                    "throwable" to throwable,
+                    "stacktrace" to throwable?.stackTrace,
+                ),
+            )
+        }
+    }
+}

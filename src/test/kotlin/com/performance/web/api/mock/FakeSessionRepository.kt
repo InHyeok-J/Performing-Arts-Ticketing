@@ -18,6 +18,7 @@ class FakeSessionRepository : SessionRepository {
             id = if (session.getId() == 0L) autoIncrementId++ else session.getId(),
             performanceId = session.getPerformanceId(),
             startDateTime = session.getStartDateTime(),
+            endDateTime = session.getEndDateTime(),
         )
         store.put(newSession.getId(), newSession);
         return newSession
@@ -30,4 +31,5 @@ class FakeSessionRepository : SessionRepository {
     override fun existById(id: Long): Boolean {
         return store.containsKey(id)
     }
+
 }

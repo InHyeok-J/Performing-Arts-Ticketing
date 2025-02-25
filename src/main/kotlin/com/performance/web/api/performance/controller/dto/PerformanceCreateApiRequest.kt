@@ -10,6 +10,8 @@ data class PerformanceCreateApiRequest(
     val startDate: LocalDate,
     val endDate: LocalDate,
     val description: String,
+    val poster: String,
+    val location: String,
     val seatClasses: List<PerformanceSeatClassCreateApiRequest>
 ) {
 
@@ -21,6 +23,8 @@ data class PerformanceCreateApiRequest(
             startDate = startDate,
             endDate = endDate,
             description = description,
+            poster = poster,
+            location = location,
             seatClasses = seatClasses.map { it.toCommand() },
         )
     }

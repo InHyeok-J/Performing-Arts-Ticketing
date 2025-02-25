@@ -16,7 +16,9 @@ class SessionEntity (
     var performanceId: Long,
 
     @Column(nullable = false)
-    var startDateTime: LocalDateTime
+    var startDateTime: LocalDateTime,
+
+    var endDateTime: LocalDateTime,
 
     )  {
 
@@ -26,6 +28,7 @@ class SessionEntity (
             id = id!!,
             performanceId = performanceId,
             startDateTime = startDateTime,
+            endDateTime = endDateTime,
         )
     }
 
@@ -36,6 +39,7 @@ class SessionEntity (
                 id = if (session.getId() == 0L) null else session.getId(),
                 performanceId = session.getPerformanceId(),
                 startDateTime = session.getStartDateTime(),
+                endDateTime = session.getEndDateTime(),
             )
         }
     }

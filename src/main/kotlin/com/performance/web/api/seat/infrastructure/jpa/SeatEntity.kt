@@ -9,7 +9,7 @@ class SeatEntity(
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id : Long,
+    var id : Long? = null,
 
     @Enumerated(EnumType.STRING)
     var seatStatus: SeatStatusEntity,
@@ -27,7 +27,7 @@ class SeatEntity(
     fun toDomain(): Seat {
 
         return Seat(
-            id = id,
+            id = id!!,
             seatClass = seatClass.toDomain(),
             seatStatus = seatStatus.toDomain(),
             seatPosition = seatPosition.toDomain(),
@@ -40,7 +40,7 @@ class SeatEntity(
 
         fun fromDomain(seat: Seat): SeatEntity {
             return SeatEntity(
-                id = seat.getId(),
+                id = if(seat.getId() == 0L ) null else seat.getId(),
                 seatStatus = SeatStatusEntity.fromDomain(seat.getSeatStatus()),
                 seatPosition = SeatPositionEntity.fromDomain(seat.getSeatPosition()),
                 seatClass = SeatClassEntity.fromDomain(seat.getSeatClass()),

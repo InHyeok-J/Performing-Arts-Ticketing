@@ -6,12 +6,14 @@ import java.time.LocalDateTime
 data class SessionCreateApiRequest(
     val performanceId: Long,
     val startDateTime: LocalDateTime,
+    val endDateTime: LocalDateTime,
 ) {
 
     fun toCommand(): SessionCreateCommand {
         return SessionCreateCommand(
             performanceId = performanceId,
             startDateTime = startDateTime,
+            endDateTime = endDateTime,
         )
     }
 }

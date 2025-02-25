@@ -14,6 +14,8 @@ class PerformanceFixture {
             startDate: LocalDate = LocalDate.now(),
             endDate: LocalDate = LocalDate.now().plusDays(1),
             description: String = "설명설명",
+            poster: String = "http://",
+            location: String = "예술의전당",
             seatClasses: List<PerformanceSeatClass> = emptyList()
         ): Performance =
             Performance(
@@ -23,6 +25,8 @@ class PerformanceFixture {
                 startDate = startDate,
                 endDate = endDate,
                 description = description,
+                poster = poster,
+                location = location,
                 seatClasses = seatClasses,
             )
     }

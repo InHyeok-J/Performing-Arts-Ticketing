@@ -39,6 +39,7 @@ class ReservationServiceTest {
         sessionRepository.save(Session(
             performanceId = 1L,
             startDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
+            endDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
         ))
         seatRepository.save(
             Seat(
@@ -70,6 +71,8 @@ class ReservationServiceTest {
                 startDate = LocalDate.of(2025,2,1),
                 endDate = LocalDate.of(2025,2,20),
                 description = "공연입니다",
+                poster = "",
+                location = "",
                 seatClasses = listOf(
                     PerformanceSeatClass(price = Money.of(10000), classType = "VIP"),
                 )

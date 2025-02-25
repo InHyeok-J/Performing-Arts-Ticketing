@@ -24,8 +24,14 @@ class PerformanceEntity(
     @Column(nullable = false)
     var endDate: LocalDate,
 
-    @Column(nullable = false)
+    @Column(columnDefinition = "TEXT")
     var description: String,
+
+    @Column(nullable = false)
+    var poster: String,
+
+    @Column(nullable = false)
+    var location:String,
 
     @OneToMany(mappedBy = "performance", fetch = FetchType.LAZY, cascade = [CascadeType.PERSIST])
     var seatClasses: MutableSet<PerformanceSeatClassEntity> = mutableSetOf(),
@@ -40,8 +46,10 @@ class PerformanceEntity(
             startDate = startDate,
             endDate = endDate,
             description = description,
+            poster =  poster,
+            location = location,
             seatClasses = seatClasses.map { it.toDomain() },
-            )
+        )
     }
 
     companion object {
@@ -53,9 +61,12 @@ class PerformanceEntity(
                 runTime = performance.getRunTime(),
                 startDate = performance.getStartDate(),
                 endDate = performance.getEndDate(),
+                poster = performance.getPoster(),
+                location = performance.getLocation(),
                 description = performance.getDescription(),
             )
-            val seatClassEntities = performance.getSeatClasses().map { PerformanceSeatClassEntity.fromDomain(it, performanceEntity) }
+            val seatClassEntities =
+                performance.getSeatClasses().map { PerformanceSeatClassEntity.fromDomain(it, performanceEntity) }
             performanceEntity.seatClasses = seatClassEntities.toMutableSet()
             return performanceEntity
         }

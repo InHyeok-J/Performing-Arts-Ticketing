@@ -9,7 +9,7 @@ interface PerformanceJpaRepository : JpaRepository<PerformanceEntity, Long> {
 
     @Query(
         "SELECT p FROM PerformanceEntity p "+
-        "JOIN FETCH p.seatClasses " +
+        "LEFT JOIN FETCH p.seatClasses " +
         "WHERE p.id = :performanceId "
     )
     fun findByIdWithSeatClass(@Param("performanceId") id : Long) : Optional<PerformanceEntity>

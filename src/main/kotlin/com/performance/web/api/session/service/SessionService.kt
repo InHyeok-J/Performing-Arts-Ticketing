@@ -26,6 +26,7 @@ class SessionService(
             Session(
                 performanceId = command.performanceId,
                 startDateTime = command.startDateTime,
+                endDateTime = command.endDateTime
             ),
         )
     }

@@ -19,7 +19,7 @@ class PerformanceSessionInfo(
                 performanceName = performance.getName(),
                 sessionStartDate = session.getStartDateTime().toLocalDate(),
                 sessionStartTime = session.getStartDateTime().toLocalTime(),
-                sessionEndTime = session.getStartDateTime().plusMinutes(performance.getRunTime()).toLocalTime(),
+                sessionEndTime = session.getEndDateTime().toLocalTime()
             )
         }
     }

@@ -11,6 +11,8 @@ data class PerformanceCreateCommand(
     val startDate: LocalDate,
     val endDate: LocalDate,
     val description: String,
+    val poster: String,
+    val location: String,
     val seatClasses: List<PerformanceSeatClassCreateCommand>
 ) {
 
@@ -22,6 +24,8 @@ data class PerformanceCreateCommand(
             startDate = startDate,
             endDate = endDate,
             description = description,
+            poster = poster,
+            location = location,
             seatClasses = seatClasses.map {
                 PerformanceSeatClass(
                     price = it.price,
