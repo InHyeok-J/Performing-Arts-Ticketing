@@ -12,6 +12,8 @@ class PerformanceDetailApiResponse(
     val startDate: LocalDate,
     val endDate: LocalDate,
     val description: String,
+    val poster: String,
+    val location: String,
     val runTime: Long,
     val seatClassInfos: List<SeatClassApiResponse>,
 ) {
@@ -40,6 +42,8 @@ class PerformanceDetailApiResponse(
                 description = performance.getDescription(),
                 runTime = performance.getRunTime(),
                 seatClassInfos = performance.getSeatClasses().map { SeatClassApiResponse.from(it) },
+                poster = performance.getPoster(),
+                location = performance.getLocation()
             )
         }
     }
