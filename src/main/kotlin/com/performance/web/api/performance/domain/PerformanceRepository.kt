@@ -4,11 +4,11 @@ import com.performance.web.api.common.domain.BaseRepository
 
 interface PerformanceRepository : BaseRepository<Performance> {
 
-    fun findByPage(pageNum: Int): List<Performance>
-
     fun findAll(): List<Performance>
 
     fun save(performance: Performance): Performance
 
     fun isExistsById(id: Long): Boolean
+
+    fun findAllByPaging(pageNum : Int, pageSize: Int): Pair<List<Performance>, Int>
 }

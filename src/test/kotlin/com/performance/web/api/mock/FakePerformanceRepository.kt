@@ -15,10 +15,6 @@ class FakePerformanceRepository : PerformanceRepository {
         return Optional.ofNullable(store[id])
     }
 
-    override fun findByPage(pageNum: Int): List<Performance> {
-        TODO("Not yet implemented")
-    }
-
     override fun findAll(): List<Performance> {
         return store.values.toList()
     }
@@ -31,11 +27,13 @@ class FakePerformanceRepository : PerformanceRepository {
             startDate = performance.getStartDate(),
             endDate = performance.getStartDate(),
             description = performance.getDescription(),
+            poster = performance.getPoster(),
+            location = performance.getLocation(),
             seatClasses = performance.getSeatClasses().map {
                 PerformanceSeatClass(
                     id = if(it.getId()==0L) autoIncrementSeatClassId++ else it.getId(),
                     price = it.getPrice(),
-                    classType = it.getClassType()
+                    classType = it.getClassType(),
                 )
             }
         )
@@ -45,5 +43,9 @@ class FakePerformanceRepository : PerformanceRepository {
 
     override fun isExistsById(id: Long): Boolean {
         return store.containsKey(id)
+    }
+
+    override fun findAllByPaging(pageNum: Int, pageSize: Int): Pair<List<Performance>, Int> {
+        TODO("Not yet implemented")
     }
 }

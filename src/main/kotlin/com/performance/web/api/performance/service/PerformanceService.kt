@@ -7,6 +7,7 @@ import com.performance.web.api.performance.domain.Performance
 import com.performance.web.api.performance.domain.PerformanceRepository
 import com.performance.web.api.performance.service.dto.PerformanceCreateCommand
 import com.performance.web.api.performance.service.dto.PerformanceDiscountResponse
+import com.performance.web.api.performance.service.dto.PerformancePagingResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -16,7 +17,7 @@ class PerformanceService(
     private val performanceRepository: PerformanceRepository,
     private val discountPolicyRepository: DiscountPolicyRepository
 ) {
-
+    private val size = 20
 
     @Transactional(readOnly = true)
     fun findById(id: Long): Performance {
@@ -25,8 +26,9 @@ class PerformanceService(
     }
 
     @Transactional(readOnly = true)
-    fun findAll(): List<Performance> {
-        return performanceRepository.findAll()
+    fun findByPaging(page:Int): PerformancePagingResponse {
+        val pagingResult = performanceRepository.findAllByPaging(page, size)
+        return PerformancePagingResponse(pagingResult.first, pagingResult.second)
     }
 
     @Transactional(readOnly = true)
