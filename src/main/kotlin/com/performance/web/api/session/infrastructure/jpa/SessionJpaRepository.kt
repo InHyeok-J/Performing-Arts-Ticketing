@@ -7,11 +7,8 @@ import java.util.Optional
 
 interface SessionJpaRepository : JpaRepository<SessionEntity, Long> {
 
-    @Query(
-        "select SessionEntity from SessionEntity s " +
-            "WHERE s.id BETWEEN :start AND :end ",
-    )
-    fun findAllByIdBetweens(@Param("start") start: Long, @Param("end") end: Long): List<SessionEntity>
-
     fun findAllByIdBetween(idAfter: Long, idBefore: Long): MutableList<SessionEntity>
+
+    @Query("SELECT s FROM SessionEntity s WHERE YEAR(s.startDateTime) = :year AND MONTH(s.startDateTime) = :month AND s.performanceId = :performanceId")
+    fun finAllByYearMonth(@Param("performanceId") id:Long, @Param("year") year: Int, @Param("month") month: Int): List<SessionEntity>
 }

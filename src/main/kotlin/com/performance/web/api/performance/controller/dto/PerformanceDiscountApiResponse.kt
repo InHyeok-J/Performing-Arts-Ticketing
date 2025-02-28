@@ -5,6 +5,7 @@ import com.performance.web.api.discount.domain.DiscountPolicy
 import com.performance.web.api.performance.service.dto.PerformanceDiscountResponse
 
 data class PerformanceDiscountApiResponse(
+    val id : Long,
     val seatClassType: String,
     val price: Long,
     val discountInfo: List<DiscountInfoApiResponse>
@@ -18,6 +19,7 @@ data class PerformanceDiscountApiResponse(
                 seatClassType = seatClass.getClassType(),
                 price = seatClass.getPrice().longValue(),
                 discountInfo = response.discountPolies.map { DiscountInfoApiResponse.from(it, seatClass.getPrice()) },
+                id = seatClass.getId()
             )
         }
     }

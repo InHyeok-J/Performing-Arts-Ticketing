@@ -6,6 +6,7 @@ import com.performance.web.api.seat.domain.SeatStatus
 data class SeatApiResponse(
     val id: Long,
     val classType: String,
+    val price : Long,
     val seatStatus: SeatStatus,
     val row: Int,
     val column: Int,
@@ -22,6 +23,7 @@ data class SeatApiResponse(
                 row = seat.getSeatPosition().row,
                 column = seat.getSeatPosition().column,
                 floor = seat.getSeatPosition().floor,
+                price = seat.getSeatClass().price.longValue()
             )
         }
     }

@@ -1,6 +1,7 @@
 package com.performance.web.api.mock
 
 import com.performance.web.api.seat.domain.Seat
+import com.performance.web.api.seat.domain.SeatClass
 import com.performance.web.api.seat.domain.SeatRepository
 import java.util.*
 
