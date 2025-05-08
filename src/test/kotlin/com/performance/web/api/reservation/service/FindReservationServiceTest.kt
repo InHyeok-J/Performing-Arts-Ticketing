@@ -58,6 +58,7 @@ class FindReservationServiceTest {
                             discountInfo = DiscountInfo("할인 적용 X"),
                         ),
                     ),
+                reservationCode = ""
             ),
         )
 

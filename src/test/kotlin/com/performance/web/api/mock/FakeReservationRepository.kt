@@ -28,6 +28,7 @@ class FakeReservationRepository : ReservationRepository {
                             discountInfo = it.getDiscountInfo(),
                         )
                     },
+                reservationCode = reservation.getReservationCode()
             )
         store.put(newReservation.getId(), newReservation)
         return newReservation

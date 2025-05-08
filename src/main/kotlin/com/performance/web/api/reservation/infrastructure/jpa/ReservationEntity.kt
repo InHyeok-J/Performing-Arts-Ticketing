@@ -17,6 +17,9 @@ class ReservationEntity(
     var customerId: Long,
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "reservation", cascade = [CascadeType.PERSIST], orphanRemoval = true)
     var tickets: MutableList<TicketEntity> = mutableListOf<TicketEntity>(),
+
+    @Column(name = "reservation_code", unique = true)
+    var reservationCode: String,
 ) {
 
     fun toDomain(): Reservation {
@@ -26,6 +29,7 @@ class ReservationEntity(
             customer = Customer(customerId),
             tickets = tickets.map { it.toDomain() },
             performanceSessionInfo = performanceSessionInfoEntity.toDomain(),
+            reservationCode = reservationCode,
         )
     }
 
@@ -40,6 +44,7 @@ class ReservationEntity(
                         PerformanceSessionInfoEntity.fromDomain(
                             reservation.getPerformanceSessionInfo(),
                         ),
+                    reservationCode = reservation.getReservationCode(),
                 )
 
             val ticketEntities =

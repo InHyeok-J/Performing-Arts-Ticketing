@@ -17,7 +17,7 @@ class SessionFixture {
                 id = id,
                 performanceId = performanceId,
                 startDateTime = startDateTime,
-                endDateTime = LocalDateTime.now(),
+                endDateTime = endDateTime,
             )
     }
 }

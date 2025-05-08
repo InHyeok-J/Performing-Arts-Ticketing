@@ -19,10 +19,10 @@ class ReservationService(
     private val sessionRepository: SessionRepository,
     private val performanceRepository: PerformanceRepository,
     private val seatRepository: SeatRepository,
-    private val reservationRepository: ReservationRepository,
     private val memberRepository: MemberRepository,
     private val discountPolicySelector: DiscountPolicySelector,
     private val ticketIssuer: TicketIssuer,
+    private val reservationSaver: ReservationSaver
 ) {
 
     fun reserve(reservationCommand: ReservationCommand): Reservation {
@@ -43,14 +43,14 @@ class ReservationService(
                 commands = convertSeatReserveCommandList(reservationCommand.seatCommands),
             )
 
-        val reservation =
-            Reservation(
+        return reservationSaver.saveAndRetry(
+            command = ReservationSaver.ReservationSaveCommand(
                 sessionId = session.getId(),
                 performanceSessionInfo = PerformanceSessionInfo.create(performance, session),
                 customer = Customer(member.getId()),
                 tickets = tickets,
-            )
-        return reservationRepository.save(reservation)
+            ),
+        )
     }
 
     private fun convertSeatReserveCommandList(

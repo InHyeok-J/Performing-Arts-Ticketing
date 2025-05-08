@@ -6,8 +6,13 @@ object Logger {
     private val logger = KotlinLogging.logger {}
 
     // only use develop
-    fun info(message: String) {
-        logger.info { message }
+    fun infoDev(message: String, data: Any? = null) {
+        val caller = Throwable().stackTrace[1]  // 호출자 기준
+        val context = "${caller.className}.${caller.methodName}"
+
+        logger.info {
+            "[$context] $message - ${objectMapper.writeValueAsString(data)}"
+        }
     }
 
     fun info(
@@ -16,13 +21,7 @@ object Logger {
         data: Any? = null,
     ) {
         logger.info {
-            objectMapper.writeValueAsString(
-                mapOf(
-                    "context" to context,
-                    "message" to message,
-                    "data" to data,
-                ),
-            )
+            "[${context}] $message - ${objectMapper.writeValueAsString(data)}"
         }
     }
 
@@ -32,14 +31,25 @@ object Logger {
         throwable: Throwable? = null,
     ) {
         logger.error {
-            objectMapper.writeValueAsString(
-                mapOf(
-                    "context" to context,
-                    "message" to message,
-                    "throwable" to throwable,
-                    "stacktrace" to throwable?.stackTrace,
-                ),
-            )
+            "[$context] - ${buildErrorMessage(context, message, throwable)}"
         }
+    }
+
+
+    private fun toJson(data: Any?): String =
+        try {
+            objectMapper.writeValueAsString(data)
+        } catch (e: Exception) {
+            "\"[JsonSerializationFailed: ${e.message}]\""
+        }
+
+    private fun buildErrorMessage(context: String, message: String, throwable: Throwable?): String {
+        val errorInfo = mapOf(
+            "context" to context,
+            "message" to message,
+            "error" to (throwable?.message ?: "null"),
+            "stacktrace" to throwable?.stackTrace?.joinToString("\n") { it.toString() },
+        )
+        return toJson(errorInfo)
     }
 }

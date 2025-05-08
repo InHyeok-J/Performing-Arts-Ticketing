@@ -8,6 +8,7 @@ import java.time.LocalTime
 
 data class ReservationApiResponse(
     val id: Long,
+    val reservationCode : String,
     val performanceName: String,
     val startDate: LocalDate,
     val starTime: LocalTime,
@@ -27,6 +28,7 @@ data class ReservationApiResponse(
                     result.getTickets().map { ticket ->
                         TicketApiResponse.from(ticket)
                     },
+                reservationCode = result.getReservationCode()
             )
     }
 

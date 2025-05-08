@@ -86,12 +86,15 @@ class ReservationServiceTest {
         reservationService =
             ReservationService(
                 sessionRepository = sessionRepository,
-                reservationRepository = reservationRepository,
                 seatRepository = seatRepository,
                 memberRepository = memberRepository,
                 discountPolicySelector = discountPolicySelector,
                 ticketIssuer = ticketIssuer,
                 performanceRepository = performanceRepository,
+                reservationSaver = ReservationSaver(
+                    reservationRepository = reservationRepository,
+                    reservationCodeGenerator = TodayBasedRandomStringReservationCodeGenerator(),
+                ),
             )
     }
 
