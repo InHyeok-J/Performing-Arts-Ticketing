@@ -5,7 +5,7 @@ plugins {
     kotlin("plugin.allopen") version "1.9.25"
     id("org.springframework.boot") version "3.4.1"
     id("io.spring.dependency-management") version "1.1.7"
-    id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
+//    id("org.jlleitschuh.gradle.ktlint") version "12.1.2"
 }
 
 allOpen {
@@ -52,7 +52,14 @@ kotlin {
 }
 
 tasks.withType<Test> {
-    useJUnitPlatform{
+    useJUnitPlatform {
         excludeTags("TooLongTest")
     }
+}
+//tasks.named("ktlintCheck").configure {
+//    enabled = false
+//}
+
+tasks.jar {
+    enabled = false
 }

@@ -1,0 +1,55 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.2.0
+    container_name: mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: qwer1234
+      MYSQL_DATABASE: ticketing
+      MYSQL_USER: exporter
+      MYSQL_PASSWORD: exporterpass
+    ports:
+      - "3309:3306"
+    networks:
+      - study-net
+    deploy:
+      resources:
+        limits:
+          memory: '2g'
+          cpus: '2.0'
+        reservations:
+          cpus: '0.5'
+          memory: '512m'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pqwer1234" ]
+      start_period: 10s
+      interval: 5s
+      retries: 5
+      timeout: 5s
+    volumes:
+      - mysql_data:/var/lib/mysql
+
+  mysql-exporter:
+    image: prom/mysqld-exporter:latest
+    container_name: mysql-exporter
+    restart: always
+    command:
+      - "--mysqld.username=exporter:exporterpass"
+      - "--mysqld.address=mysql:3306"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    ports:
+      - "9104:9104"
+    networks:
+      - study-net
+
+
+volumes:
+  mysql_data:
+
+networks:
+  study-net:
+    external: true
