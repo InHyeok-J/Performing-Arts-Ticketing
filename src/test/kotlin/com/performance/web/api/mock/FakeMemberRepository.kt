@@ -18,6 +18,7 @@ class FakeMemberRepository : MemberRepository {
             Member(
                 id = if (member.getId() == 0L) autoIncrementId++ else member.getId(),
                 name = member.getName(),
+                email = member.getEmail()
             )
         store.put(newMember.getId(), newMember)
         return newMember

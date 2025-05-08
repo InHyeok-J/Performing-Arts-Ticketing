@@ -36,7 +36,7 @@ class ReservationServiceTest {
         val discountPolicySelector = DiscountPolicySelector(discountPolicyRepository)
         val ticketIssuer = TicketIssuer(seatRepository)
 
-        memberRepository.save(Member(name = "김철수"))
+        memberRepository.save(Member(name = "김철수", email = "email"))
         sessionRepository.save(
             Session(
                 performanceId = 1L,

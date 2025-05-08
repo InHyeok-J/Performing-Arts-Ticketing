@@ -5,7 +5,7 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
 
 @SpringBootTest(classes = [Application::class])
-@ActiveProfiles("test")
+@ActiveProfiles("testh2")
 class ApplicationTests {
 
     @Test

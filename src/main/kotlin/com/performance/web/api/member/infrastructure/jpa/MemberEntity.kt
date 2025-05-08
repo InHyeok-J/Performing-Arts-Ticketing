@@ -10,12 +10,14 @@ class MemberEntity(
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     var id: Long,
     var name: String,
+    var email: String,
 ) {
 
     fun toDomain(): Member =
         Member(
             id = id,
             name = name,
+            email = email
         )
 
     companion object {
@@ -23,6 +25,7 @@ class MemberEntity(
             MemberEntity(
                 id = customer.getId(),
                 name = customer.getName(),
+                email = customer.getEmail()
             )
     }
 }
