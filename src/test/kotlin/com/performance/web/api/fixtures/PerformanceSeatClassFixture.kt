@@ -10,13 +10,12 @@ class PerformanceSeatClassFixture {
         fun create(
             id: Long = 0L,
             classType: String = "VIP",
-            price: Money = Money.of(10000)
-        ): PerformanceSeatClass {
-            return PerformanceSeatClass(
+            price: Money = Money.of(10000),
+        ): PerformanceSeatClass =
+            PerformanceSeatClass(
                 id = id,
                 classType = classType,
                 price = price,
             )
-        }
     }
 }

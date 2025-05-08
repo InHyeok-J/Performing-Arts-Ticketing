@@ -10,7 +10,11 @@ object Logger {
         logger.info { message }
     }
 
-    fun info(context: String, message: String, data: Any? = null) {
+    fun info(
+        context: String,
+        message: String,
+        data: Any? = null,
+    ) {
         logger.info {
             objectMapper.writeValueAsString(
                 mapOf(
@@ -22,7 +26,11 @@ object Logger {
         }
     }
 
-    fun error(context: String, message: String, throwable: Throwable? = null) {
+    fun error(
+        context: String,
+        message: String,
+        throwable: Throwable? = null,
+    ) {
         logger.error {
             objectMapper.writeValueAsString(
                 mapOf(

@@ -8,39 +8,31 @@ import java.time.LocalTime
 
 @Embeddable
 class PerformanceSessionInfoEntity(
-
     @Column(nullable = false)
     var performanceName: String,
-
     @Column(nullable = false)
     var sessionStartDate: LocalDate,
-
     @Column(nullable = false)
     var sessionStartTime: LocalTime,
-
     @Column(nullable = false)
     var sessionEndTime: LocalTime,
 ) {
 
-
-    fun toDomain(): PerformanceSessionInfo {
-        return PerformanceSessionInfo(
+    fun toDomain(): PerformanceSessionInfo =
+        PerformanceSessionInfo(
             performanceName = performanceName,
             sessionStartDate = sessionStartDate,
             sessionStartTime = sessionStartTime,
             sessionEndTime = sessionEndTime,
         )
-    }
-
 
     companion object {
-        fun fromDomain(performanceSessionInfo: PerformanceSessionInfo): PerformanceSessionInfoEntity {
-            return PerformanceSessionInfoEntity(
+        fun fromDomain(performanceSessionInfo: PerformanceSessionInfo): PerformanceSessionInfoEntity =
+            PerformanceSessionInfoEntity(
                 performanceName = performanceSessionInfo.performanceName,
                 sessionStartDate = performanceSessionInfo.sessionStartDate,
                 sessionStartTime = performanceSessionInfo.sessionStartTime,
                 sessionEndTime = performanceSessionInfo.sessionEndTime,
             )
-        }
     }
 }

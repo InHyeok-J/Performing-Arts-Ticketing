@@ -12,7 +12,5 @@ class FindReservationService(
     private val reservationRepository: ReservationRepository,
 ) : FindReservationUseCase {
 
-    override fun findById(reservationId: Long): Reservation {
-        return reservationRepository.findByIdThrown(reservationId)
-    }
+    override fun findById(reservationId: Long): Reservation = reservationRepository.findByIdThrown(reservationId)
 }

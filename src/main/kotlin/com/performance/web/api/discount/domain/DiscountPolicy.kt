@@ -28,9 +28,7 @@ abstract class DiscountPolicy protected constructor(
         return getDiscountAmount(price)
     }
 
-    fun calculateDiscountAmountWithoutCondition(price: Money): Money {
-        return getDiscountAmount(price)
-    }
+    fun calculateDiscountAmountWithoutCondition(price: Money): Money = getDiscountAmount(price)
 
     fun getId(): Long = _id
 
@@ -44,8 +42,6 @@ abstract class DiscountPolicy protected constructor(
 
     companion object {
 
-        fun none(): DiscountPolicy {
-            return NoneDiscountPolicy()
-        }
+        fun none(): DiscountPolicy = NoneDiscountPolicy()
     }
 }

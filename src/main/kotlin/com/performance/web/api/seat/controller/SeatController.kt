@@ -11,12 +11,13 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/seats")
 class SeatController(
-    private val seatService: SeatService
+    private val seatService: SeatService,
 ) {
 
-
     @GetMapping("/{sessionId}")
-    fun getSeat(@PathVariable sessionId: Long): ResponseEntity<List<SeatApiResponse>> {
+    fun getSeat(
+        @PathVariable sessionId: Long,
+    ): ResponseEntity<List<SeatApiResponse>> {
         val result = seatService.findBySessionId(sessionId)
 
         return ResponseEntity.ok()

@@ -12,7 +12,5 @@ class OfflineCheckConditionEntity(
     discountPolicyEntity: DiscountPolicyEntity,
 ) : DiscountConditionEntity(id, discountPolicyEntity) {
 
-    override fun toDomain(): DiscountCondition {
-        return OfflineCheckCondition()
-    }
+    override fun toDomain(): DiscountCondition = OfflineCheckCondition()
 }

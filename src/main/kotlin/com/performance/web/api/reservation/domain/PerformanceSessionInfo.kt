@@ -8,19 +8,20 @@ import java.time.LocalTime
 class PerformanceSessionInfo(
     val performanceName: String,
     val sessionStartDate: LocalDate,
-    val sessionStartTime : LocalTime,
+    val sessionStartTime: LocalTime,
     val sessionEndTime: LocalTime,
 ) {
 
-
     companion object {
-        fun create(performance: Performance, session:Session): PerformanceSessionInfo {
-            return PerformanceSessionInfo(
+        fun create(
+            performance: Performance,
+            session: Session,
+        ): PerformanceSessionInfo =
+            PerformanceSessionInfo(
                 performanceName = performance.getName(),
                 sessionStartDate = session.getStartDateTime().toLocalDate(),
                 sessionStartTime = session.getStartDateTime().toLocalTime(),
-                sessionEndTime = session.getEndDateTime().toLocalTime()
+                sessionEndTime = session.getEndDateTime().toLocalTime(),
             )
-        }
     }
 }

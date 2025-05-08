@@ -29,40 +29,37 @@ class FakeDiscountPolicyRepository : DiscountPolicyRepository {
         return policy
     }
 
-
-    private fun policyUpdateHelper(discountPolicy: DiscountPolicy) : DiscountPolicy {
-        return when(discountPolicy){
+    private fun policyUpdateHelper(discountPolicy: DiscountPolicy): DiscountPolicy =
+        when (discountPolicy) {
             is PercentDiscountPolicy -> {
-                val percentPolicy : PercentDiscountPolicy = discountPolicy
+                val percentPolicy: PercentDiscountPolicy = discountPolicy
                 PercentDiscountPolicy(
-                    id = if(percentPolicy.getId() == 0L) autoIncrementId++ else percentPolicy.getId(),
+                    id = if (percentPolicy.getId() == 0L) autoIncrementId++ else percentPolicy.getId(),
                     name = percentPolicy.getName(),
                     percent = percentPolicy.getPercent(),
                     seatClassId = percentPolicy.getPerformanceSeatClassId(),
-                    conditions = discountPolicy.getConditions().map { conditionUpdaterHelper(it) }.toTypedArray()
+                    conditions = discountPolicy.getConditions().map { conditionUpdaterHelper(it) }.toTypedArray(),
                 )
             }
             is NoneDiscountPolicy -> NoneDiscountPolicy()
             else -> throw IllegalArgumentException("Unsupported discount policy type ${discountPolicy::class.java}")
         }
-    }
 
-
-    private fun conditionUpdaterHelper(discountCondition: DiscountCondition): DiscountCondition {
-        return when (discountCondition){
+    private fun conditionUpdaterHelper(discountCondition: DiscountCondition): DiscountCondition =
+        when (discountCondition) {
             is TimeRangeCondition -> {
-                val timeCondition:TimeRangeCondition = discountCondition
+                val timeCondition: TimeRangeCondition = discountCondition
                 TimeRangeCondition(
-                    id = if(timeCondition.getId() == 0L) autoIncrementConditionId++ else timeCondition.getId(),
+                    id = if (timeCondition.getId() == 0L) autoIncrementConditionId++ else timeCondition.getId(),
                     startTime = timeCondition.getStartTime(),
                     endTime = timeCondition.getEndTime(),
                 )
             }
 
             is DateRangeCondition -> {
-                val dateCondition : DateRangeCondition = discountCondition
+                val dateCondition: DateRangeCondition = discountCondition
                 DateRangeCondition(
-                    id = if(dateCondition.getId() == 0L) autoIncrementConditionId++ else dateCondition.getId(),
+                    id = if (dateCondition.getId() == 0L) autoIncrementConditionId++ else dateCondition.getId(),
                     startDate = dateCondition.getStartDate(),
                     endDate = dateCondition.getEndDate(),
                 )
@@ -70,7 +67,4 @@ class FakeDiscountPolicyRepository : DiscountPolicyRepository {
 
             else -> throw IllegalArgumentException("잘못된 discount condition")
         }
-    }
-
-
 }

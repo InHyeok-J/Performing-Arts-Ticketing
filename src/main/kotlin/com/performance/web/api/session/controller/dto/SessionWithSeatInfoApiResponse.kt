@@ -7,28 +7,27 @@ data class SessionWithSeatInfoApiResponse(
     val id: Long,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime,
-    val seatCurrentStatus: List<SeatCurrentStatusApiResponse>
+    val seatCurrentStatus: List<SeatCurrentStatusApiResponse>,
 ) {
 
     data class SeatCurrentStatusApiResponse(
         val classType: String,
-        val remain: Long
+        val remain: Long,
     )
 
-
     companion object {
-        fun from(sessionWithSeatInfo: SessionWithSeatInfoResponse): SessionWithSeatInfoApiResponse {
-            return SessionWithSeatInfoApiResponse(
+        fun from(sessionWithSeatInfo: SessionWithSeatInfoResponse): SessionWithSeatInfoApiResponse =
+            SessionWithSeatInfoApiResponse(
                 id = sessionWithSeatInfo.id,
                 startDateTime = sessionWithSeatInfo.startDateTime,
                 endDateTime = sessionWithSeatInfo.endDateTime,
-                seatCurrentStatus = sessionWithSeatInfo.seatCurrentStatus.map {
-                    SeatCurrentStatusApiResponse(
-                        classType = it.classType,
-                        remain = it.remain,
-                    )
-                },
+                seatCurrentStatus =
+                    sessionWithSeatInfo.seatCurrentStatus.map {
+                        SeatCurrentStatusApiResponse(
+                            classType = it.classType,
+                            remain = it.remain,
+                        )
+                    },
             )
-        }
     }
 }

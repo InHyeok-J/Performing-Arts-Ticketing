@@ -14,16 +14,14 @@ class TimeRangeConditionEntity(
     discountPolicyEntity: DiscountPolicyEntity? = null,
     @Column(nullable = true)
     var startTime: LocalTime,
-
     @Column(nullable = true)
     var endTime: LocalTime,
 ) : DiscountConditionEntity(id, discountPolicyEntity) {
 
-    override fun toDomain(): DiscountCondition {
-        return TimeRangeCondition(
+    override fun toDomain(): DiscountCondition =
+        TimeRangeCondition(
             id = this.id,
             startTime = startTime,
             endTime = endTime,
         )
-    }
 }

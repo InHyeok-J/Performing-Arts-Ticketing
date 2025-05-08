@@ -45,7 +45,7 @@ data class ReservationApiResponse(
                     seatInfo = SeatInfoApiResponse.from(ticket.getTicketSeatInfo()),
                     totalAmount = ticket.getTotalAmount().longValue(),
                     regularPrice = ticket.getRegularPrice().longValue(),
-                    discountName = ticket.getDiscountInfo().name
+                    discountName = ticket.getDiscountInfo().name,
                 )
         }
     }
@@ -62,7 +62,7 @@ data class ReservationApiResponse(
                     seatClassType = ticketSeatInfo.seatType,
                     floor = ticketSeatInfo.floor,
                     row = ticketSeatInfo.row,
-                    column = ticketSeatInfo.column
+                    column = ticketSeatInfo.column,
                 )
         }
     }

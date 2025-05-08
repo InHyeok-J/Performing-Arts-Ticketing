@@ -6,31 +6,23 @@ import jakarta.persistence.Embeddable
 
 @Embeddable
 class SeatPositionEntity(
-
     @Column(nullable = false)
-    var rowIndex : Int,
-
+    var rowIndex: Int,
     @Column(nullable = false)
-    var columnIndex : Int,
-
+    var columnIndex: Int,
     @Column(nullable = false)
-    var floor: Int
+    var floor: Int,
 ) {
 
-
-
-    fun toDomain(): SeatPosition {
-        return SeatPosition(rowIndex, columnIndex, floor)
-    }
+    fun toDomain(): SeatPosition = SeatPosition(rowIndex, columnIndex, floor)
 
     companion object {
 
-        fun fromDomain(seatPosition: SeatPosition): SeatPositionEntity {
-            return SeatPositionEntity(
+        fun fromDomain(seatPosition: SeatPosition): SeatPositionEntity =
+            SeatPositionEntity(
                 rowIndex = seatPosition.row,
                 columnIndex = seatPosition.column,
-                floor = seatPosition.floor
+                floor = seatPosition.floor,
             )
-        }
     }
 }

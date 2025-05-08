@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReservationServiceLockFacade(
-    private val reservationService: ReservationService
+    private val reservationService: ReservationService,
 ) : ReservationUseCase {
 
     override fun reserve(reservationCommand: ReservationCommand): Reservation {
@@ -21,5 +21,4 @@ class ReservationServiceLockFacade(
             throw BusinessException("이미 예매된 좌석입니다. 다시 시도해주세요.")
         }
     }
-
 }

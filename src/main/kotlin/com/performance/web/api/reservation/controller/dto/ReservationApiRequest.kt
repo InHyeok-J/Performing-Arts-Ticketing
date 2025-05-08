@@ -14,9 +14,7 @@ data class ReservationApiRequest(
         val discountPolicyId: Long?, // nullable
     )
 
-    fun toServiceCommand(
-        member: Member,
-    ): ReservationCommand =
+    fun toServiceCommand(member: Member): ReservationCommand =
         ReservationCommand(
             customerId = member.getId(),
             sessionId = sessionId,
@@ -24,7 +22,7 @@ data class ReservationApiRequest(
                 seatRequests.map { request ->
                     ReservationCommand.ReservationSeatCommand(
                         seatId = request.seatId,
-                        discountPolicyId = request.discountPolicyId
+                        discountPolicyId = request.discountPolicyId,
                     )
                 },
         )

@@ -8,7 +8,6 @@ import java.time.LocalDateTime
 
 class DateRangeConditionTest {
 
-
     @ParameterizedTest
     @ValueSource(
         strings = [
@@ -18,23 +17,23 @@ class DateRangeConditionTest {
         ],
     )
     fun `날짜 범위가 일치하지 않으면 실패한다`(date: String) {
-        //given
+        // given
         val requestDate = LocalDateTime.parse(date)
-        val factor = DiscountFactor(reserveDateTime = requestDate, ticketTotalAmount = 10);
+        val factor = DiscountFactor(reserveDateTime = requestDate, ticketTotalAmount = 10)
 
         // 1월 1일~ 1월 7일 23:59까지
-        val condition = DateRangeCondition(
-            startDate = LocalDate.of(2025, 1, 1),
-            endDate = LocalDate.of(2025, 1, 7),
-        )
+        val condition =
+            DateRangeCondition(
+                startDate = LocalDate.of(2025, 1, 1),
+                endDate = LocalDate.of(2025, 1, 7),
+            )
 
-        //when
-        val result = condition.isSatisfiedBy(factor);
+        // when
+        val result = condition.isSatisfiedBy(factor)
 
-        //then
+        // then
         assertThat(result).isFalse()
     }
-
 
     @ParameterizedTest
     @ValueSource(
@@ -45,21 +44,21 @@ class DateRangeConditionTest {
         ],
     )
     fun `날짜 범위가 일치하면 성공한다`(date: String) {
-        //given
+        // given
         val requestDate = LocalDateTime.parse(date)
-        val factor = DiscountFactor(reserveDateTime = requestDate, ticketTotalAmount = 10);
+        val factor = DiscountFactor(reserveDateTime = requestDate, ticketTotalAmount = 10)
 
         // 1월 1일~ 1월 7일 23:59까지
-        val condition = DateRangeCondition(
-            startDate = LocalDate.of(2025, 1, 1),
-            endDate = LocalDate.of(2025, 1, 7),
-        )
+        val condition =
+            DateRangeCondition(
+                startDate = LocalDate.of(2025, 1, 1),
+                endDate = LocalDate.of(2025, 1, 7),
+            )
 
-        //when
-        val result = condition.isSatisfiedBy(factor);
+        // when
+        val result = condition.isSatisfiedBy(factor)
 
-        //then
+        // then
         assertThat(result).isTrue()
     }
-
 }

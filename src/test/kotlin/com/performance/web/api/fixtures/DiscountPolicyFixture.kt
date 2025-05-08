@@ -20,7 +20,7 @@ class DiscountPolicyFixture {
                 name = name,
                 id = id,
                 conditions = conditions,
-                seatClassId = seatClassId
+                seatClassId = seatClassId,
             )
     }
 }

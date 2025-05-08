@@ -6,7 +6,7 @@ import java.util.*
 
 class FakeSessionRepository : SessionRepository {
 
-    private var autoIncrementId = 1L;
+    private var autoIncrementId = 1L
     private val store = mutableMapOf<Long, Session>()
 
     override fun findById(id: Long): Optional<Session> {
@@ -14,22 +14,18 @@ class FakeSessionRepository : SessionRepository {
     }
 
     override fun save(session: Session): Session {
-        var newSession = Session(
-            id = if (session.getId() == 0L) autoIncrementId++ else session.getId(),
-            performanceId = session.getPerformanceId(),
-            startDateTime = session.getStartDateTime(),
-            endDateTime = session.getEndDateTime(),
-        )
-        store.put(newSession.getId(), newSession);
+        var newSession =
+            Session(
+                id = if (session.getId() == 0L) autoIncrementId++ else session.getId(),
+                performanceId = session.getPerformanceId(),
+                startDateTime = session.getStartDateTime(),
+                endDateTime = session.getEndDateTime(),
+            )
+        store.put(newSession.getId(), newSession)
         return newSession
     }
 
-    override fun findAll(): List<Session> {
-        return store.values.toList()
-    }
+    override fun findAll(): List<Session> = store.values.toList()
 
-    override fun existById(id: Long): Boolean {
-        return store.containsKey(id)
-    }
-
+    override fun existById(id: Long): Boolean = store.containsKey(id)
 }

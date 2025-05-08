@@ -9,18 +9,25 @@ import java.util.*
 
 @Component
 class DiscountPolicyRepositoryImpl(
-    private val discountPolicyJpaRepository: DiscountPolicyJpaRepository
+    private val discountPolicyJpaRepository: DiscountPolicyJpaRepository,
 ) : DiscountPolicyRepository {
 
-    override fun findById(id: Long): Optional<DiscountPolicy> {
-        return discountPolicyJpaRepository.findByIdWithConditions(id).map { it.toDomain() }
-    }
+    override fun findById(id: Long): Optional<DiscountPolicy> =
+        discountPolicyJpaRepository.findByIdWithConditions(
+            id,
+        ).map {
+            it.toDomain()
+        }
 
-    override fun findAllByPerformanceSeatClassIds(ids: List<Long>): List<DiscountPolicy> {
-        return discountPolicyJpaRepository.findAllByPerformanceSeatClassIds(ids).map { it.toDomain() }
-    }
+    override fun findAllByPerformanceSeatClassIds(ids: List<Long>): List<DiscountPolicy> =
+        discountPolicyJpaRepository.findAllByPerformanceSeatClassIds(
+            ids,
+        ).map {
+            it.toDomain()
+        }
 
-    override fun save(policy: DiscountPolicy): DiscountPolicy {
-        return discountPolicyJpaRepository.save(DiscountPolicyEntityMapper.fromDomainToEntity(policy)).toDomain()
-    }
+    override fun save(policy: DiscountPolicy): DiscountPolicy =
+        discountPolicyJpaRepository.save(
+            DiscountPolicyEntityMapper.fromDomainToEntity(policy),
+        ).toDomain()
 }

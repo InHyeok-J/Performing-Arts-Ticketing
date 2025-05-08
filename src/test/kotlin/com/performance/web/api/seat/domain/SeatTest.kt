@@ -24,28 +24,30 @@ class SeatTest {
         assertThatThrownBy {
             seat.reserveTicket(
                 discountPolicy = DiscountPolicyFixture.createPercent(),
-                discountFactor = DiscountFactorFixture.create()
+                discountFactor = DiscountFactorFixture.create(),
             )
         }.isInstanceOf(BusinessException::class.java).hasMessageContaining("이미 예약된 좌석입니다.")
     }
 
     @Test
-    fun `할인 정책과 요소를 확인해 티켓을 생성한다`(){
-        //given
-        val discountPolicy = DiscountPolicyFixture.createPercent(
-            percent = 0.5,
-            name = "퍼센트할인입니다"
-        )
+    fun `할인 정책과 요소를 확인해 티켓을 생성한다`() {
+        // given
+        val discountPolicy =
+            DiscountPolicyFixture.createPercent(
+                percent = 0.5,
+                name = "퍼센트할인입니다",
+            )
         val discountFactor = DiscountFactorFixture.create()
-        val seat = SeatFixture.create(
-            seatClass = SeatClassFixture.create(price = Money.of(10000)),
-            seatPosition = SeatPosition(1, 1, 1)
-        )
+        val seat =
+            SeatFixture.create(
+                seatClass = SeatClassFixture.create(price = Money.of(10000)),
+                seatPosition = SeatPosition(1, 1, 1),
+            )
 
         // when
         val ticket = seat.reserveTicket(discountPolicy, discountFactor)
 
-        //then
+        // then
         assertThat(ticket.getTotalAmount()).isEqualTo(Money.of(5000))
         assertThat(ticket.getRegularPrice()).isEqualTo(Money.of(10000))
         assertThat(ticket.getTicketSeatInfo().row).isEqualTo(1)

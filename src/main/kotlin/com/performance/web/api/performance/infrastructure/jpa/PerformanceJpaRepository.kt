@@ -10,16 +10,18 @@ import java.util.*
 interface PerformanceJpaRepository : JpaRepository<PerformanceEntity, Long> {
 
     @Query(
-        "SELECT p FROM PerformanceEntity p "+
-        "LEFT JOIN FETCH p.seatClasses " +
-        "WHERE p.id = :performanceId "
+        "SELECT p FROM PerformanceEntity p " +
+            "LEFT JOIN FETCH p.seatClasses " +
+            "WHERE p.id = :performanceId ",
     )
-    fun findByIdWithSeatClass(@Param("performanceId") id : Long) : Optional<PerformanceEntity>
+    fun findByIdWithSeatClass(
+        @Param("performanceId") id: Long,
+    ): Optional<PerformanceEntity>
 
     @Query(
-        "SELECT p FROM PerformanceEntity p "+
+        "SELECT p FROM PerformanceEntity p " +
             "LEFT JOIN FETCH p.seatClasses ",
-        countQuery = "SELECT COUNT(p) FROM PerformanceEntity p "
+        countQuery = "SELECT COUNT(p) FROM PerformanceEntity p ",
     )
-    fun findAllWithPaging(pageable :Pageable) : Page<PerformanceEntity>
+    fun findAllWithPaging(pageable: Pageable): Page<PerformanceEntity>
 }

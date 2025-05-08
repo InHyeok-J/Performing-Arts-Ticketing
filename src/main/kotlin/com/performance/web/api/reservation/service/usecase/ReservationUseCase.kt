@@ -6,5 +6,4 @@ import com.performance.web.api.reservation.service.dto.ReservationCommand
 interface ReservationUseCase {
 
     fun reserve(reservationCommand: ReservationCommand): Reservation
-
 }

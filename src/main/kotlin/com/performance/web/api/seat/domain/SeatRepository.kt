@@ -14,5 +14,4 @@ interface SeatRepository : BaseRepository<Seat> {
     fun findAllBySessionId(sessionId: Long): List<Seat>
 
     fun findByIdWithLock(id: Long): Optional<Seat>
-
 }

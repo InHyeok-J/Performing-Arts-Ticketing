@@ -7,11 +7,10 @@ import com.performance.web.api.session.service.SessionService
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
-
 @RestController
 @RequestMapping("/api/sessions")
 class SessionController(
-    private val sessionService: SessionService
+    private val sessionService: SessionService,
 ) {
 
     @GetMapping("/all")
@@ -22,7 +21,9 @@ class SessionController(
     }
 
     @PostMapping
-    fun create(@RequestBody sessionCreateApiRequest: SessionCreateApiRequest): ResponseEntity<SessionApiResponse> {
+    fun create(
+        @RequestBody sessionCreateApiRequest: SessionCreateApiRequest,
+    ): ResponseEntity<SessionApiResponse> {
         val result = sessionService.create(sessionCreateApiRequest.toCommand())
         return ResponseEntity.ok()
             .body(SessionApiResponse.from(result))
@@ -32,11 +33,10 @@ class SessionController(
     fun getSessionAndSeatsByYearMonth(
         @PathVariable performanceId: Long,
         @RequestParam year: Int,
-        @RequestParam(defaultValue = "1") month: Int
+        @RequestParam(defaultValue = "1") month: Int,
     ): ResponseEntity<List<SessionWithSeatInfoApiResponse>> {
-        val result = sessionService.getWithSeatsByYearMonth(performanceId, year, month);
+        val result = sessionService.getWithSeatsByYearMonth(performanceId, year, month)
         return ResponseEntity.ok()
             .body(result.map { SessionWithSeatInfoApiResponse.from(it) })
     }
-
 }

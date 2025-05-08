@@ -21,8 +21,9 @@ class TimeRangeCondition(
         return isTimeInRange
     }
 
-
     fun getId(): Long = _id
+
     fun getStartTime(): LocalTime = _startTime
+
     fun getEndTime(): LocalTime = _endTime
 }

@@ -7,7 +7,7 @@ class Ticket(
     totalAmount: Money,
     regularPrice: Money,
     ticketSeatInfo: TicketSeatInfo,
-    discountInfo: DiscountInfo
+    discountInfo: DiscountInfo,
 ) {
 
     private val _id: Long = id
@@ -25,5 +25,4 @@ class Ticket(
     fun getTicketSeatInfo(): TicketSeatInfo = _seatInfo
 
     fun getDiscountInfo(): DiscountInfo = _discountInfo
-
 }

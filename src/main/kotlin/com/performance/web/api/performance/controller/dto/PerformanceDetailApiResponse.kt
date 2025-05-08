@@ -3,10 +3,8 @@ package com.performance.web.api.performance.controller.dto
 import com.performance.web.api.performance.domain.Performance
 import com.performance.web.api.performance.domain.PerformanceSeatClass
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class PerformanceDetailApiResponse(
-
     val id: Long,
     val name: String,
     val startDate: LocalDate,
@@ -20,21 +18,20 @@ class PerformanceDetailApiResponse(
 
     data class SeatClassApiResponse(
         val classType: String,
-        val price: Long
+        val price: Long,
     ) {
         companion object {
-            fun from(seatClass: PerformanceSeatClass): SeatClassApiResponse {
-                return SeatClassApiResponse(
+            fun from(seatClass: PerformanceSeatClass): SeatClassApiResponse =
+                SeatClassApiResponse(
                     classType = seatClass.getClassType(),
                     price = seatClass.getPrice().longValue(),
                 )
-            }
         }
     }
 
     companion object {
-        fun from(performance: Performance): PerformanceDetailApiResponse {
-            return PerformanceDetailApiResponse(
+        fun from(performance: Performance): PerformanceDetailApiResponse =
+            PerformanceDetailApiResponse(
                 id = performance.getId(),
                 name = performance.getName(),
                 startDate = performance.getStartDate(),
@@ -43,8 +40,7 @@ class PerformanceDetailApiResponse(
                 runTime = performance.getRunTime(),
                 seatClassInfos = performance.getSeatClasses().map { SeatClassApiResponse.from(it) },
                 poster = performance.getPoster(),
-                location = performance.getLocation()
+                location = performance.getLocation(),
             )
-        }
     }
 }

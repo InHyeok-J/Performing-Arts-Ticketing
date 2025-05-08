@@ -13,9 +13,8 @@ import java.time.LocalTime
 
 class FindReservationServiceTest {
 
-    private lateinit var  findReservationService: FindReservationService
+    private lateinit var findReservationService: FindReservationService
     private lateinit var reservationRepository: ReservationRepository
-
 
     @BeforeEach
     fun init() {
@@ -24,19 +23,17 @@ class FindReservationServiceTest {
         findReservationService = FindReservationService(reservationRepository)
     }
 
-
     @Test
     fun `findById 시 없는 id로 요청하면 예외를 반환한다`() {
-        //given
+        // given
         val id = 2L
 
-        //when
-        //then
+        // when
+        // then
         assertThatThrownBy {
-            findReservationService.findById(id);
+            findReservationService.findById(id)
         }.isInstanceOf(ResourceNotFoundException::class.java)
     }
-
 
     @Test
     fun `findById시 조회가 성공하면 정상적으로 예매를 반환한다`() {
@@ -44,25 +41,27 @@ class FindReservationServiceTest {
         reservationRepository.save(
             Reservation(
                 sessionId = 1L,
-                performanceSessionInfo = PerformanceSessionInfo(
-                    performanceName = "공연",
-                    sessionStartDate = LocalDate.now(),
-                    sessionStartTime = LocalTime.now(),
-                    sessionEndTime = LocalTime.now(),
-                ),
-                customer = Customer(1L),
-                tickets = listOf(
-                    Ticket(
-                        totalAmount = Money.of(10000),
-                        regularPrice = Money.of(10000),
-                        ticketSeatInfo = TicketSeatInfo(1, 1, 1, "VIP"),
-                        discountInfo = DiscountInfo("할인 적용 X"),
+                performanceSessionInfo =
+                    PerformanceSessionInfo(
+                        performanceName = "공연",
+                        sessionStartDate = LocalDate.now(),
+                        sessionStartTime = LocalTime.now(),
+                        sessionEndTime = LocalTime.now(),
                     ),
-                ),
+                customer = Customer(1L),
+                tickets =
+                    listOf(
+                        Ticket(
+                            totalAmount = Money.of(10000),
+                            regularPrice = Money.of(10000),
+                            ticketSeatInfo = TicketSeatInfo(1, 1, 1, "VIP"),
+                            discountInfo = DiscountInfo("할인 적용 X"),
+                        ),
+                    ),
             ),
         )
 
-        //when
+        // when
         val result = findReservationService.findById(1L)
 
         assertThat(result.getId()).isEqualTo(1L)

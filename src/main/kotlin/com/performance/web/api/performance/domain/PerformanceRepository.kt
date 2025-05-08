@@ -10,5 +10,8 @@ interface PerformanceRepository : BaseRepository<Performance> {
 
     fun isExistsById(id: Long): Boolean
 
-    fun findAllByPaging(pageNum : Int, pageSize: Int): Pair<List<Performance>, Int>
+    fun findAllByPaging(
+        pageNum: Int,
+        pageSize: Int,
+    ): Pair<List<Performance>, Int>
 }

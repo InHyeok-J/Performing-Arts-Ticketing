@@ -16,7 +16,7 @@ class PerformanceFixture {
             description: String = "설명설명",
             poster: String = "http://",
             location: String = "예술의전당",
-            seatClasses: List<PerformanceSeatClass> = emptyList()
+            seatClasses: List<PerformanceSeatClass> = emptyList(),
         ): Performance =
             Performance(
                 id = id,

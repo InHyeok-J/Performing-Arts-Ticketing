@@ -24,92 +24,96 @@ class ReservationServiceTest {
 
     private lateinit var reservationService: ReservationService
     private lateinit var reservationRepository: ReservationRepository
+
     @BeforeEach
     fun initReservationService() {
         val memberRepository = FakeMemberRepository()
         val sessionRepository = FakeSessionRepository()
         val seatRepository = FakeSeatRepository()
         val performanceRepository = FakePerformanceRepository()
-        val discountPolicyRepository = FakeDiscountPolicyRepository();
+        val discountPolicyRepository = FakeDiscountPolicyRepository()
         reservationRepository = FakeReservationRepository()
         val discountPolicySelector = DiscountPolicySelector(discountPolicyRepository)
         val ticketIssuer = TicketIssuer(seatRepository)
 
         memberRepository.save(Member(name = "김철수"))
-        sessionRepository.save(Session(
-            performanceId = 1L,
-            startDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
-            endDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
-        ))
-        seatRepository.save(
-            Seat(
-                seatClass = SeatClass(price = Money.of(10000), classType = "VIP"),
-                seatPosition = SeatPosition(1,1,1),
-                seatStatus = SeatStatus.UN_RESERVED,
-                sessionId = 1L,
-            )
+        sessionRepository.save(
+            Session(
+                performanceId = 1L,
+                startDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
+                endDateTime = LocalDateTime.of(2025, 1, 10, 12, 30),
+            ),
         )
         seatRepository.save(
             Seat(
                 seatClass = SeatClass(price = Money.of(10000), classType = "VIP"),
-                seatPosition = SeatPosition(1,2,1),
+                seatPosition = SeatPosition(1, 1, 1),
                 seatStatus = SeatStatus.UN_RESERVED,
                 sessionId = 1L,
-            )
+            ),
+        )
+        seatRepository.save(
+            Seat(
+                seatClass = SeatClass(price = Money.of(10000), classType = "VIP"),
+                seatPosition = SeatPosition(1, 2, 1),
+                seatStatus = SeatStatus.UN_RESERVED,
+                sessionId = 1L,
+            ),
         )
         discountPolicyRepository.save(
             PercentDiscountPolicy(
                 name = "50%할인",
                 percent = 0.5,
                 seatClassId = 1L,
-            )
+            ),
         )
         performanceRepository.save(
             Performance(
                 name = "공연1",
                 runTimeInMinutes = 180,
-                startDate = LocalDate.of(2025,2,1),
-                endDate = LocalDate.of(2025,2,20),
+                startDate = LocalDate.of(2025, 2, 1),
+                endDate = LocalDate.of(2025, 2, 20),
                 description = "공연입니다",
                 poster = "",
                 location = "",
-                seatClasses = listOf(
-                    PerformanceSeatClass(price = Money.of(10000), classType = "VIP"),
-                )
+                seatClasses =
+                    listOf(
+                        PerformanceSeatClass(price = Money.of(10000), classType = "VIP"),
+                    ),
+            ),
+        )
+
+        reservationService =
+            ReservationService(
+                sessionRepository = sessionRepository,
+                reservationRepository = reservationRepository,
+                seatRepository = seatRepository,
+                memberRepository = memberRepository,
+                discountPolicySelector = discountPolicySelector,
+                ticketIssuer = ticketIssuer,
+                performanceRepository = performanceRepository,
             )
-        )
-
-
-
-        reservationService = ReservationService(
-            sessionRepository = sessionRepository,
-            reservationRepository = reservationRepository,
-            seatRepository =  seatRepository,
-            memberRepository = memberRepository,
-            discountPolicySelector = discountPolicySelector,
-            ticketIssuer =  ticketIssuer,
-            performanceRepository = performanceRepository
-        )
     }
 
     @Test
     fun `reserve 을 통해 예매를 생성할 수 있다`() {
         // given
-        val command = ReservationCommand(
-            customerId = 1L,
-            sessionId = 1L,
-            seatCommands = listOf(
-                ReservationCommand.ReservationSeatCommand(
-                    seatId = 1L,
-                    discountPolicyId = 1L,
-                ),
-                ReservationCommand.ReservationSeatCommand(
-                    seatId = 2L,
-                    discountPolicyId = 1L,
-                ),
-            ),
-        )
-
+        val command =
+            ReservationCommand(
+                customerId = 1L,
+                sessionId = 1L,
+                seatCommands =
+                    listOf(
+                        ReservationCommand.ReservationSeatCommand(
+                            seatId = 1L,
+                            discountPolicyId = 1L,
+                        ),
+                        ReservationCommand.ReservationSeatCommand(
+                            seatId = 2L,
+                            discountPolicyId = 1L,
+                        ),
+                    ),
+            )
 
         // when
         val result = reservationService.reserve(command)
@@ -120,31 +124,30 @@ class ReservationServiceTest {
         assertThat(result.getTotalAmount()).isEqualTo(Money.of(10000))
     }
 
-
     @Test
     fun `reserve 시 할인 입력을 안하면 기본 금액으로 예매를 생성한다`() {
-        val command = ReservationCommand(
-            customerId = 1L,
-            sessionId = 1L,
-            seatCommands = listOf(
-                ReservationCommand.ReservationSeatCommand(
-                    seatId = 1L,
-                    discountPolicyId = null,
-                ),
-                ReservationCommand.ReservationSeatCommand(
-                    seatId = 2L,
-                    discountPolicyId = null,
-                ),
-            ),
-        )
+        val command =
+            ReservationCommand(
+                customerId = 1L,
+                sessionId = 1L,
+                seatCommands =
+                    listOf(
+                        ReservationCommand.ReservationSeatCommand(
+                            seatId = 1L,
+                            discountPolicyId = null,
+                        ),
+                        ReservationCommand.ReservationSeatCommand(
+                            seatId = 2L,
+                            discountPolicyId = null,
+                        ),
+                    ),
+            )
 
         // when
         val result = reservationService.reserve(command)
-
 
         // then
         assertThat(result.getId()).isEqualTo(1L)
         assertThat(result.getTotalAmount()).isEqualTo(Money.of(20000))
     }
-
 }

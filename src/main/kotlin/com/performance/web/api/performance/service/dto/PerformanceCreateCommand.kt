@@ -13,12 +13,11 @@ data class PerformanceCreateCommand(
     val description: String,
     val poster: String,
     val location: String,
-    val seatClasses: List<PerformanceSeatClassCreateCommand>
+    val seatClasses: List<PerformanceSeatClassCreateCommand>,
 ) {
 
-
-    fun toEntity(): Performance {
-        return Performance(
+    fun toEntity(): Performance =
+        Performance(
             name = name,
             runTimeInMinutes = runTime,
             startDate = startDate,
@@ -26,17 +25,17 @@ data class PerformanceCreateCommand(
             description = description,
             poster = poster,
             location = location,
-            seatClasses = seatClasses.map {
-                PerformanceSeatClass(
-                    price = it.price,
-                    classType = it.classType,
-                )
-            },
+            seatClasses =
+                seatClasses.map {
+                    PerformanceSeatClass(
+                        price = it.price,
+                        classType = it.classType,
+                    )
+                },
         )
-    }
 
     data class PerformanceSeatClassCreateCommand(
         val classType: String,
-        val price: Money
+        val price: Money,
     )
 }

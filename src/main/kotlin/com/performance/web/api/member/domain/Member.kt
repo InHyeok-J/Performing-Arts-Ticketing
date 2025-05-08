@@ -9,5 +9,6 @@ class Member(
     private val _name = name
 
     fun getId() = _id
+
     fun getName() = _name
 }

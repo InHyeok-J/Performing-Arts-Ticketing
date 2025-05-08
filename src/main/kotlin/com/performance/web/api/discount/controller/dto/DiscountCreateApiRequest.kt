@@ -10,10 +10,10 @@ data class DiscountCreateApiRequest(
     val type: String,
     val percent: Double?,
     val seatClassId: Long,
-    val conditions: List<DiscountConditionApiRequest>
+    val conditions: List<DiscountConditionApiRequest>,
 ) {
-    fun toCommand(): DiscountCreateCommand {
-        return DiscountCreateCommand(
+    fun toCommand(): DiscountCreateCommand =
+        DiscountCreateCommand(
             performanceId = performanceId,
             name = name,
             type = type,
@@ -21,8 +21,6 @@ data class DiscountCreateApiRequest(
             seatClassId = seatClassId,
             conditions = conditions.map { it.toCommand() },
         )
-    }
-
 
     data class DiscountConditionApiRequest(
         val type: String,
@@ -32,15 +30,13 @@ data class DiscountCreateApiRequest(
         val endTime: LocalTime?,
     ) {
 
-        fun toCommand(): DiscountCreateCommand.DiscountConditionCreateCommand {
-            return DiscountCreateCommand.DiscountConditionCreateCommand(
+        fun toCommand(): DiscountCreateCommand.DiscountConditionCreateCommand =
+            DiscountCreateCommand.DiscountConditionCreateCommand(
                 type = this.type,
                 startDate = this.startDate,
                 endDate = this.endDate,
                 startTime = this.startTime,
                 endTime = this.endTime,
             )
-        }
     }
-
 }

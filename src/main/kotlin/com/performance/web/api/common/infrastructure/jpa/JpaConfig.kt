@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 
 @Configuration
 @EnableJpaRepositories(basePackages = ["com.performance.web.api"])
-class JpaConfig {
-}
+class JpaConfig

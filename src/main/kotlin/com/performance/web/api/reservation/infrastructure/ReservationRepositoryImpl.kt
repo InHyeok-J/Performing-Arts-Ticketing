@@ -7,18 +7,20 @@ import com.performance.web.api.reservation.infrastructure.jpa.ReservationJpaRepo
 import org.springframework.stereotype.Component
 import java.util.*
 
-
 @Component
 class ReservationRepositoryImpl(
-    private val reservationJpaRepository : ReservationJpaRepository ,
+    private val reservationJpaRepository: ReservationJpaRepository,
 ) : ReservationRepository {
 
-    override fun save(reservation: Reservation): Reservation {
-        return reservationJpaRepository.save(ReservationEntity.fromDomain(reservation)).toDomain()
-    }
+    override fun save(reservation: Reservation): Reservation =
+        reservationJpaRepository.save(
+            ReservationEntity.fromDomain(reservation),
+        ).toDomain()
 
-    override fun findById(reservationId: Long): Optional<Reservation> {
-        return reservationJpaRepository.findByIdWithTickets(reservationId).map { it.toDomain() }
-    }
-
+    override fun findById(reservationId: Long): Optional<Reservation> =
+        reservationJpaRepository.findByIdWithTickets(
+            reservationId,
+        ).map {
+            it.toDomain()
+        }
 }

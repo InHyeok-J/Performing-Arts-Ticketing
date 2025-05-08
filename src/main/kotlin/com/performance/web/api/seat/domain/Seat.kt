@@ -50,5 +50,4 @@ class Seat(
     fun getSeatPosition(): SeatPosition = _seatPosition
 
     fun getSessionId(): Long = _sessionId
-
 }

@@ -12,31 +12,38 @@ class DiscountConditionEntityMapper {
 
     companion object {
 
-        fun fromDomainToEntity(discountCondition: DiscountCondition, discountPolicyEntity: DiscountPolicyEntity): DiscountConditionEntity {
-            return when (discountCondition) {
+        fun fromDomainToEntity(
+            discountCondition: DiscountCondition,
+            discountPolicyEntity: DiscountPolicyEntity,
+        ): DiscountConditionEntity =
+            when (discountCondition) {
                 is TimeRangeCondition -> fromTimeRangeToEntity(discountCondition, discountPolicyEntity)
                 is DateRangeCondition -> fromDateRangeToEntity(discountCondition, discountPolicyEntity)
-                else -> throw IllegalArgumentException("Discount condition type ${discountCondition.javaClass} not supported")
+                else -> throw IllegalArgumentException(
+                    "Discount condition type ${discountCondition.javaClass} not supported",
+                )
             }
-        }
 
-
-        private fun fromTimeRangeToEntity(timeRangeCondition: TimeRangeCondition, discountPolicyEntity: DiscountPolicyEntity): TimeRangeConditionEntity {
-            return TimeRangeConditionEntity(
+        private fun fromTimeRangeToEntity(
+            timeRangeCondition: TimeRangeCondition,
+            discountPolicyEntity: DiscountPolicyEntity,
+        ): TimeRangeConditionEntity =
+            TimeRangeConditionEntity(
                 id = timeRangeCondition.getId(),
                 startTime = timeRangeCondition.getStartTime(),
                 endTime = timeRangeCondition.getEndTime(),
-                discountPolicyEntity = discountPolicyEntity
+                discountPolicyEntity = discountPolicyEntity,
             )
-        }
 
-        private fun fromDateRangeToEntity(dateRangeCondition: DateRangeCondition, discountPolicyEntity: DiscountPolicyEntity): DateRangeConditionEntity {
-            return DateRangeConditionEntity(
+        private fun fromDateRangeToEntity(
+            dateRangeCondition: DateRangeCondition,
+            discountPolicyEntity: DiscountPolicyEntity,
+        ): DateRangeConditionEntity =
+            DateRangeConditionEntity(
                 id = dateRangeCondition.getId(),
                 startDate = dateRangeCondition.getStartDate(),
                 endDate = dateRangeCondition.getEndDate(),
-                discountPolicyEntity = discountPolicyEntity
+                discountPolicyEntity = discountPolicyEntity,
             )
-        }
     }
 }

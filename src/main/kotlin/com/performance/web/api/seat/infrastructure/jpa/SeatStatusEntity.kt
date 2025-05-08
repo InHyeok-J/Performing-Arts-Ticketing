@@ -6,19 +6,17 @@ enum class SeatStatusEntity {
     UN_RESERVE,
     RESERVED, ;
 
-    fun toDomain(): SeatStatus {
-        return when (this) {
+    fun toDomain(): SeatStatus =
+        when (this) {
             UN_RESERVE -> SeatStatus.UN_RESERVED
             RESERVED -> SeatStatus.RESERVED
         }
-    }
 
     companion object {
-        fun fromDomain(seatStatus: SeatStatus): SeatStatusEntity {
-            return when (seatStatus) {
+        fun fromDomain(seatStatus: SeatStatus): SeatStatusEntity =
+            when (seatStatus) {
                 SeatStatus.UN_RESERVED -> UN_RESERVE
                 SeatStatus.RESERVED -> RESERVED
             }
-        }
     }
 }

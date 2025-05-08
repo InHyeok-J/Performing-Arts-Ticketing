@@ -7,8 +7,12 @@ import java.util.Optional
 
 interface ReservationJpaRepository : JpaRepository<ReservationEntity, Long> {
 
-    @Query("SELECT r FROM ReservationEntity r " +
+    @Query(
+        "SELECT r FROM ReservationEntity r " +
             "JOIN FETCH r.tickets t " +
-            "WHERE r.id = :reservationId")
-    fun findByIdWithTickets(@Param("reservationId") id: Long): Optional<ReservationEntity>
+            "WHERE r.id = :reservationId",
+    )
+    fun findByIdWithTickets(
+        @Param("reservationId") id: Long,
+    ): Optional<ReservationEntity>
 }

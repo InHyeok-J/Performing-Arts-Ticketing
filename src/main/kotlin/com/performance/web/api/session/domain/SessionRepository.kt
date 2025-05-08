@@ -7,5 +7,5 @@ interface SessionRepository : BaseRepository<Session> {
 
     fun findAll(): List<Session>
 
-    fun existById(id:Long): Boolean
+    fun existById(id: Long): Boolean
 }

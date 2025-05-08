@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/api/discounts")
 class DiscountController(
-    private val discountService: DiscountService
+    private val discountService: DiscountService,
 ) {
-
 
     @GetMapping("/all")
     fun allDiscounts(): ResponseEntity<DiscountPolicy> {
-        val result = discountService.findById(1L);
+        val result = discountService.findById(1L)
         return ResponseEntity.ok(result)
     }
 
     @PostMapping()
-    fun createDiscountPolicy(@RequestBody discountCreateApiRequest: DiscountCreateApiRequest): ResponseEntity<DiscountPolicy> {
+    fun createDiscountPolicy(
+        @RequestBody discountCreateApiRequest: DiscountCreateApiRequest,
+    ): ResponseEntity<DiscountPolicy> {
         val result = discountService.create(discountCreateApiRequest.toCommand())
         return ResponseEntity.ok(result)
     }

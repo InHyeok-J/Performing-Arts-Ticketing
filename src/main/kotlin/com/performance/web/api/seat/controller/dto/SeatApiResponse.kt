@@ -6,25 +6,23 @@ import com.performance.web.api.seat.domain.SeatStatus
 data class SeatApiResponse(
     val id: Long,
     val classType: String,
-    val price : Long,
+    val price: Long,
     val seatStatus: SeatStatus,
     val row: Int,
     val column: Int,
-    val floor: Int
+    val floor: Int,
 ) {
 
-
     companion object {
-        fun from(seat: Seat): SeatApiResponse {
-            return SeatApiResponse(
+        fun from(seat: Seat): SeatApiResponse =
+            SeatApiResponse(
                 id = seat.getId(),
                 classType = seat.getSeatClass().classType,
                 seatStatus = seat.getSeatStatus(),
                 row = seat.getSeatPosition().row,
                 column = seat.getSeatPosition().column,
                 floor = seat.getSeatPosition().floor,
-                price = seat.getSeatClass().price.longValue()
+                price = seat.getSeatClass().price.longValue(),
             )
-        }
     }
 }

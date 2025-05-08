@@ -5,5 +5,4 @@ import com.performance.web.api.common.domain.BaseRepository
 interface ReservationRepository : BaseRepository<Reservation> {
 
     fun save(reservation: Reservation): Reservation
-
 }

@@ -1,6 +1,5 @@
 package com.performance.web.api.common.controller
 
-data class PageInfo (
+data class PageInfo(
     val totalPage: Int,
-) {
-}
+)

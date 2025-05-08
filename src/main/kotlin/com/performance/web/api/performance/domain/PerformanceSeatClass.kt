@@ -12,8 +12,9 @@ class PerformanceSeatClass(
     private val _price: Money = price
     private val _classType: String = classType
 
+    fun getId(): Long = _id
 
-    fun getId():Long = _id
     fun getPrice(): Money = _price
-    fun getClassType():String = _classType
+
+    fun getClassType(): String = _classType
 }

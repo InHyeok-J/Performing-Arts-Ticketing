@@ -10,29 +10,24 @@ import org.junit.platform.commons.logging.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.jdbc.Sql
-import org.springframework.test.context.jdbc.Sql.ExecutionPhase
-import org.springframework.test.context.jdbc.SqlGroup
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.Executors
 import java.util.concurrent.atomic.AtomicInteger
 
 @SpringBootTest
 @ActiveProfiles("test")
-//@SqlGroup(
+// @SqlGroup(
 //    Sql(value = ["/sql/reservation-concurrency-test.sql"], executionPhase = ExecutionPhase.BEFORE_TEST_METHOD),
 //    Sql(value = ["/sql/delete-all-data.sql"], executionPhase = ExecutionPhase.AFTER_TEST_METHOD),
-//)
+// )
 @Tag("TooLongTest")
 class ReservationIntegrationTest(
-    @Autowired private val reservationService: ReservationServiceLockFacade
+    @Autowired private val reservationService: ReservationServiceLockFacade,
 ) {
-
 
     companion object {
         val log: Logger = LoggerFactory.getLogger(this::class.java)
     }
-
 
     @BeforeEach
     fun init() {
@@ -41,7 +36,7 @@ class ReservationIntegrationTest(
     @Test
     fun `좌석 예매 동시성 테스트`() {
         log.info { "예매 시작전 셋팅" }
-        val threadCount = 10;
+        val threadCount = 10
         val latch = CountDownLatch(threadCount)
         val executor = Executors.newFixedThreadPool(threadCount)
         val successCount = AtomicInteger()
@@ -52,11 +47,9 @@ class ReservationIntegrationTest(
         val failTimes = mutableListOf<Long>()
         val startTime = System.nanoTime()
 
-
-
         for (i in 1..threadCount) {
             executor.execute {
-                val command = creatCommand(i.toLong(), listOf(1L, 2L));
+                val command = creatCommand(i.toLong(), listOf(1L, 2L))
                 val threadStartTime = System.nanoTime() // 개별 스레드 시작 시간
 
                 try {
@@ -94,13 +87,12 @@ class ReservationIntegrationTest(
 
     //    @Test
     fun `좌석 예매 순차적 동시성 테스트`() {
-        val memberCount = 10;
+        val memberCount = 10
         val successCount = AtomicInteger()
         val failCount = AtomicInteger()
 
-
         for (i in 1..memberCount) {
-            val command = creatCommand(i.toLong(), listOf(1L, 2L));
+            val command = creatCommand(i.toLong(), listOf(1L, 2L))
             try {
                 val reserve = reservationService.reserve(command)
                 successCount.incrementAndGet()
@@ -115,17 +107,19 @@ class ReservationIntegrationTest(
         assertThat(failCount.get()).isEqualTo(9)
     }
 
-
-    private fun creatCommand(memberId: Long, seatIds: List<Long>): ReservationCommand {
-        return ReservationCommand(
+    private fun creatCommand(
+        memberId: Long,
+        seatIds: List<Long>,
+    ): ReservationCommand =
+        ReservationCommand(
             customerId = memberId,
             sessionId = 1L,
-            seatCommands = seatIds.map {
-                ReservationCommand.ReservationSeatCommand(
-                    seatId = it,
-                    discountPolicyId = 1L,
-                )
-            }.toList(),
+            seatCommands =
+                seatIds.map {
+                    ReservationCommand.ReservationSeatCommand(
+                        seatId = it,
+                        discountPolicyId = 1L,
+                    )
+                }.toList(),
         )
-    }
 }

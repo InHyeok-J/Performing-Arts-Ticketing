@@ -6,8 +6,8 @@ import com.performance.web.api.performance.service.dto.PerformancePagingResponse
 import java.time.LocalDate
 
 class PerformancePagingApiResponse(
-    val data : List<PerformanceListResponse>,
-    val pageInfo : PageInfo
+    val data: List<PerformanceListResponse>,
+    val pageInfo: PageInfo,
 ) {
 
     data class PerformanceListResponse(
@@ -15,28 +15,26 @@ class PerformancePagingApiResponse(
         val name: String,
         val startDate: LocalDate,
         val endDate: LocalDate,
-        val poster : String
-    ){
+        val poster: String,
+    ) {
         companion object {
-            fun from(performance: Performance): PerformanceListResponse {
-                return PerformanceListResponse(
+            fun from(performance: Performance): PerformanceListResponse =
+                PerformanceListResponse(
                     id = performance.getId(),
                     name = performance.getName(),
                     startDate = performance.getStartDate(),
                     endDate = performance.getEndDate(),
-                    poster = performance.getPoster()
+                    poster = performance.getPoster(),
                 )
-            }
         }
     }
 
     companion object {
 
-        fun from(performancePagingResponse: PerformancePagingResponse): PerformancePagingApiResponse {
-            return PerformancePagingApiResponse(
+        fun from(performancePagingResponse: PerformancePagingResponse): PerformancePagingApiResponse =
+            PerformancePagingApiResponse(
                 data = performancePagingResponse.performances.map { PerformanceListResponse.from(it) },
-                pageInfo = PageInfo(performancePagingResponse.totalPage)
+                pageInfo = PageInfo(performancePagingResponse.totalPage),
             )
-        }
     }
 }

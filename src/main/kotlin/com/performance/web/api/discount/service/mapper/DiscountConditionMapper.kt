@@ -11,7 +11,9 @@ import com.performance.web.api.discount.service.dto.DiscountCreateCommand
 class DiscountConditionMapper {
 
     enum class ConditionType {
-        TIME_RANGE, DATE_RANGE, OFFINE_CHECK
+        TIME_RANGE,
+        DATE_RANGE,
+        OFFINE_CHECK,
     }
 
     companion object {
@@ -24,17 +26,15 @@ class DiscountConditionMapper {
                         endTime = command.endTime.checkNotNullOrThrow("endTime"),
                     )
 
-                ConditionType.DATE_RANGE.name -> DateRangeCondition(
-                    startDate = command.startDate.checkNotNullOrThrow("startDate"),
-                    endDate = command.endDate.checkNotNullOrThrow("endDate"),
-                )
+                ConditionType.DATE_RANGE.name ->
+                    DateRangeCondition(
+                        startDate = command.startDate.checkNotNullOrThrow("startDate"),
+                        endDate = command.endDate.checkNotNullOrThrow("endDate"),
+                    )
 
                 ConditionType.OFFINE_CHECK.name -> return OfflineCheckCondition()
                 else -> throw BusinessException("잘못된 discount Type입니다 ${command.type}")
             }
         }
     }
-
-
-
 }

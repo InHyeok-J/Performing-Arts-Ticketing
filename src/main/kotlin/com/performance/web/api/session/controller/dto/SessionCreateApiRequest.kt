@@ -9,11 +9,10 @@ data class SessionCreateApiRequest(
     val endDateTime: LocalDateTime,
 ) {
 
-    fun toCommand(): SessionCreateCommand {
-        return SessionCreateCommand(
+    fun toCommand(): SessionCreateCommand =
+        SessionCreateCommand(
             performanceId = performanceId,
             startDateTime = startDateTime,
             endDateTime = endDateTime,
         )
-    }
 }

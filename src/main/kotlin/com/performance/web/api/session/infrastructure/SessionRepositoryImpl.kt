@@ -11,11 +11,10 @@ import com.performance.web.api.session.service.dto.SessionWithSeatInfoResponse
 import org.springframework.stereotype.Component
 import java.util.*
 
-
 @Component
 class SessionRepositoryImpl(
     private val sessionJpaRepository: SessionJpaRepository,
-    private val seatJpaRepository: SeatJpaRepository
+    private val seatJpaRepository: SeatJpaRepository,
 ) : SessionRepository, SessionQueryRepository {
 
     override fun findById(id: Long): Optional<Session> {
@@ -37,7 +36,7 @@ class SessionRepositoryImpl(
     override fun findByYearMonthWithSeat(
         performanceId: Long,
         year: Int,
-        month: Int
+        month: Int,
     ): List<SessionWithSeatInfoResponse> {
         val sessions = sessionJpaRepository.finAllByYearMonth(performanceId, year, month)
         if (sessions.isEmpty()) return emptyList()
@@ -52,12 +51,13 @@ class SessionRepositoryImpl(
                 id = session.id!!,
                 startDateTime = session.startDateTime,
                 endDateTime = session.endDateTime,
-                seatCurrentStatus = seatMap[session.id]?.map { seat: SeatAvailabilityDto ->
-                    SessionWithSeatInfoResponse.SeatCurrentStatus(
-                        classType = seat.classType,
-                        remain = seat.count,
-                    )
-                } ?: emptyList(),
+                seatCurrentStatus =
+                    seatMap[session.id]?.map { seat: SeatAvailabilityDto ->
+                        SessionWithSeatInfoResponse.SeatCurrentStatus(
+                            classType = seat.classType,
+                            remain = seat.count,
+                        )
+                    } ?: emptyList(),
             )
         }
     }

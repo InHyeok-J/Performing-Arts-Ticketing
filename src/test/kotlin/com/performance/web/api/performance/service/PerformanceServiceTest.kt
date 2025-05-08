@@ -11,7 +11,6 @@ import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 
-
 class PerformanceServiceTest {
 
     private lateinit var performanceService: PerformanceService
@@ -24,16 +23,17 @@ class PerformanceServiceTest {
             PerformanceFixture.create(
                 name = "공연1",
                 runTimeMinutes = 180,
-                seatClasses = listOf(
-                    PerformanceSeatClass(
-                        price = Money.of(10000),
-                        classType = "VIP",
+                seatClasses =
+                    listOf(
+                        PerformanceSeatClass(
+                            price = Money.of(10000),
+                            classType = "VIP",
+                        ),
+                        PerformanceSeatClass(
+                            price = Money.of(10000),
+                            classType = "R",
+                        ),
                     ),
-                    PerformanceSeatClass(
-                        price = Money.of(10000),
-                        classType = "R",
-                    ),
-                ),
             ),
         )
         val discountPolicyRepository = FakeDiscountPolicyRepository()
@@ -65,10 +65,10 @@ class PerformanceServiceTest {
     @Test
     fun `findById 시 해당하는 공연을 조회할 수 있다`() {
         // given
-        //when
+        // when
         val result = performanceService.findById(1)
 
-        //then
+        // then
         assertThat(result.getId()).isEqualTo(1L)
         assertThat(result.getName()).isEqualTo("공연1")
         assertThat(result.getSeatClasses().get(0).getClassType()).isEqualTo("VIP")
@@ -78,7 +78,7 @@ class PerformanceServiceTest {
     @Test
     fun `findSeatClassByIdWithDiscounts 시 공연Id에 해당하는 할인 목록을 전부 조회할 수있다`() {
         // given
-        //when
+        // when
         var result = performanceService.findSeatClassByIdWithDiscounts(1L)
 
         // then
@@ -95,5 +95,4 @@ class PerformanceServiceTest {
         assertThat(rClassDiscounts.performanceSeatClass.getClassType()).isEqualTo("R")
         assertThat(rClassDiscounts.discountPolies).isEmpty()
     }
-
 }

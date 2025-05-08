@@ -7,21 +7,18 @@ import jakarta.persistence.Embeddable
 @Embeddable
 class DiscountInfoEntity(
     @Column
-    var name: String
+    var name: String,
 ) {
 
-    fun toDomain(): DiscountInfo {
-        return DiscountInfo(
-            name = name
+    fun toDomain(): DiscountInfo =
+        DiscountInfo(
+            name = name,
         )
-    }
-
 
     companion object {
-        fun fromDomain(discountInfo: DiscountInfo): DiscountInfoEntity {
-            return DiscountInfoEntity(
-                name = discountInfo.name
+        fun fromDomain(discountInfo: DiscountInfo): DiscountInfoEntity =
+            DiscountInfoEntity(
+                name = discountInfo.name,
             )
-        }
     }
 }

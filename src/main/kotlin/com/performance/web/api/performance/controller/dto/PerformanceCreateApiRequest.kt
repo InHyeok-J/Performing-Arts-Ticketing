@@ -12,12 +12,11 @@ data class PerformanceCreateApiRequest(
     val description: String,
     val poster: String,
     val location: String,
-    val seatClasses: List<PerformanceSeatClassCreateApiRequest>
+    val seatClasses: List<PerformanceSeatClassCreateApiRequest>,
 ) {
 
-
-    fun toCommand(): PerformanceCreateCommand {
-        return PerformanceCreateCommand(
+    fun toCommand(): PerformanceCreateCommand =
+        PerformanceCreateCommand(
             name = name,
             runTime = runTime,
             startDate = startDate,
@@ -27,19 +26,16 @@ data class PerformanceCreateApiRequest(
             location = location,
             seatClasses = seatClasses.map { it.toCommand() },
         )
-    }
-
 
     data class PerformanceSeatClassCreateApiRequest(
         val classType: String,
-        val price: Long
+        val price: Long,
     ) {
 
-        fun toCommand(): PerformanceCreateCommand.PerformanceSeatClassCreateCommand {
-            return PerformanceCreateCommand.PerformanceSeatClassCreateCommand(
+        fun toCommand(): PerformanceCreateCommand.PerformanceSeatClassCreateCommand =
+            PerformanceCreateCommand.PerformanceSeatClassCreateCommand(
                 classType = classType,
                 price = Money.of(price),
             )
-        }
     }
 }

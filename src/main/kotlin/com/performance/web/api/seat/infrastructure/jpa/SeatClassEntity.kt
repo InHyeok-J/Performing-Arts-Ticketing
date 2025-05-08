@@ -7,28 +7,23 @@ import jakarta.persistence.Embeddable
 
 @Embeddable
 class SeatClassEntity(
-
     @Column(nullable = false)
-    var price:Long,
-
+    var price: Long,
     @Column(nullable = false)
-    var classType : String
+    var classType: String,
 ) {
 
-    fun toDomain():SeatClass{
-        return SeatClass(
+    fun toDomain(): SeatClass =
+        SeatClass(
             price = Money.of(price),
-            classType = classType
+            classType = classType,
         )
-    }
 
     companion object {
-        fun fromDomain(seatClass: SeatClass): SeatClassEntity {
-            return SeatClassEntity(
+        fun fromDomain(seatClass: SeatClass): SeatClassEntity =
+            SeatClassEntity(
                 price = seatClass.price.longValue(),
-                classType = seatClass.classType
+                classType = seatClass.classType,
             )
-        }
     }
-
 }

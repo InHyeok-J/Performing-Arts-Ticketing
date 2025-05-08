@@ -16,17 +16,18 @@ class DiscountPolicyEntityMapper {
             }
         }
 
-
         private fun fromPercentToEntity(percentDiscountPolicy: PercentDiscountPolicy): PercentDiscountPolicyEntity {
-            val policyEntity = PercentDiscountPolicyEntity(
-                id = percentDiscountPolicy.getId(),
-                name = percentDiscountPolicy.getName(),
-                percent = percentDiscountPolicy.getPercent(),
-                performanceSeatClassId = percentDiscountPolicy.getPerformanceSeatClassId(),
-            )
-            policyEntity.conditions = percentDiscountPolicy.getConditions()
-                .map { DiscountConditionEntityMapper.fromDomainToEntity(it, policyEntity) }
-                .toMutableList();
+            val policyEntity =
+                PercentDiscountPolicyEntity(
+                    id = percentDiscountPolicy.getId(),
+                    name = percentDiscountPolicy.getName(),
+                    percent = percentDiscountPolicy.getPercent(),
+                    performanceSeatClassId = percentDiscountPolicy.getPerformanceSeatClassId(),
+                )
+            policyEntity.conditions =
+                percentDiscountPolicy.getConditions()
+                    .map { DiscountConditionEntityMapper.fromDomainToEntity(it, policyEntity) }
+                    .toMutableList()
 
             return policyEntity
         }

@@ -8,7 +8,7 @@ class DiscountFactorFixture {
     companion object {
         fun create(
             reserveDateTime: LocalDateTime = LocalDateTime.now(),
-            ticketTotalAmount: Int = 1
+            ticketTotalAmount: Int = 1,
         ): DiscountFactor =
             DiscountFactor(
                 reserveDateTime = reserveDateTime,

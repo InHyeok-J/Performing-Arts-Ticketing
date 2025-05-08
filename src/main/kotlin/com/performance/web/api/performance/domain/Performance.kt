@@ -2,7 +2,6 @@ package com.performance.web.api.performance.domain
 
 import com.performance.web.api.common.domain.BusinessException
 import java.time.LocalDate
-import java.time.LocalDateTime
 
 class Performance(
     id: Long = 0L,
@@ -27,15 +26,22 @@ class Performance(
     private val _seatClasses: List<PerformanceSeatClass> = seatClasses
 
     fun getId(): Long = _id
-    fun getName(): String = _name
-    fun getRunTime(): Long = _runTime
-    fun getStartDate(): LocalDate = _startDate
-    fun getEndDate(): LocalDate = _endDate
-    fun getDescription(): String = _description
-    fun getPoster(): String = _poster
-    fun getLocation(): String = _location
-    fun getSeatClasses(): List<PerformanceSeatClass> = _seatClasses
 
+    fun getName(): String = _name
+
+    fun getRunTime(): Long = _runTime
+
+    fun getStartDate(): LocalDate = _startDate
+
+    fun getEndDate(): LocalDate = _endDate
+
+    fun getDescription(): String = _description
+
+    fun getPoster(): String = _poster
+
+    fun getLocation(): String = _location
+
+    fun getSeatClasses(): List<PerformanceSeatClass> = _seatClasses
 
     fun findSeatClassById(performanceSeatClassId: Long): PerformanceSeatClass =
         _seatClasses.find { it.getId() == performanceSeatClassId }
@@ -43,7 +49,6 @@ class Performance(
 
     fun checkClassId(seatClassId: Long) {
         _seatClasses.find { it.getId() == seatClassId }
-            ?: throw BusinessException("${seatClassId} 에 해당하는 performanceSeatClass 가 없습니다 ")
+            ?: throw BusinessException("$seatClassId 에 해당하는 performanceSeatClass 가 없습니다 ")
     }
-
 }

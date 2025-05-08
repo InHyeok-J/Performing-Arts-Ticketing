@@ -2,7 +2,6 @@ package com.performance.web.api.session.service
 
 import com.performance.web.api.common.domain.BusinessException
 import com.performance.web.api.performance.domain.PerformanceRepository
-import com.performance.web.api.seat.domain.SeatRepository
 import com.performance.web.api.session.domain.Session
 import com.performance.web.api.session.domain.SessionQueryRepository
 import com.performance.web.api.session.domain.SessionRepository
@@ -14,14 +13,18 @@ import org.springframework.stereotype.Service
 class SessionService(
     private val sessionRepository: SessionRepository,
     private val performanceRepository: PerformanceRepository,
-    private val sessionQueryRepository: SessionQueryRepository
+    private val sessionQueryRepository: SessionQueryRepository,
 ) {
 
     fun getAll(): List<Session> {
         return sessionRepository.findAll()
     }
 
-    fun getWithSeatsByYearMonth(performanceId: Long, year: Int, month: Int): List<SessionWithSeatInfoResponse> {
+    fun getWithSeatsByYearMonth(
+        performanceId: Long,
+        year: Int,
+        month: Int,
+    ): List<SessionWithSeatInfoResponse> {
         return sessionQueryRepository.findByYearMonthWithSeat(performanceId, year, month)
     }
 

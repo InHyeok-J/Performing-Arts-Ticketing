@@ -10,13 +10,12 @@ import java.util.*
 
 @Component
 class PerformanceRepositoryImpl(
-    private val performanceJpaRepository: PerformanceJpaRepository
+    private val performanceJpaRepository: PerformanceJpaRepository,
 ) : PerformanceRepository {
 
     override fun findById(id: Long): Optional<Performance> {
         return performanceJpaRepository.findByIdWithSeatClass(id).map { it.toDomain() }
     }
-
 
     override fun findAll(): List<Performance> {
         return performanceJpaRepository.findAll().map { it.toDomain() }
@@ -30,8 +29,11 @@ class PerformanceRepositoryImpl(
         return performanceJpaRepository.existsById(id)
     }
 
-    override fun findAllByPaging(pageNum: Int, pageSize: Int): Pair<List<Performance>, Int> {
+    override fun findAllByPaging(
+        pageNum: Int,
+        pageSize: Int,
+    ): Pair<List<Performance>, Int> {
         val pagingResult = performanceJpaRepository.findAllWithPaging(PageRequest.of(pageNum, pageSize))
-        return Pair(pagingResult.content.map { it.toDomain() } , pagingResult.totalPages)
+        return Pair(pagingResult.content.map { it.toDomain() }, pagingResult.totalPages)
     }
 }

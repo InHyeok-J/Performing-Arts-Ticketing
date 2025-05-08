@@ -3,12 +3,12 @@ package com.performance.web.api.discount.domain
 import java.time.LocalDate
 
 class DateRangeCondition(
-    id : Long  = 0L,
+    id: Long = 0L,
     startDate: LocalDate,
     endDate: LocalDate,
 ) : DiscountCondition {
 
-    private val _id : Long = id
+    private val _id: Long = id
     private val _startDate: LocalDate = startDate
     private val _endDate: LocalDate = endDate
 
@@ -18,6 +18,8 @@ class DateRangeCondition(
     }
 
     fun getId(): Long = _id
+
     fun getStartDate(): LocalDate = _startDate
+
     fun getEndDate(): LocalDate = _endDate
 }

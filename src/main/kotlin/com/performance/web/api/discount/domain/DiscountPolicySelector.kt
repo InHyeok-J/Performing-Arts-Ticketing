@@ -5,7 +5,7 @@ import java.util.Optional
 
 @Component
 class DiscountPolicySelector(
-    private val discountPolicyRepository: DiscountPolicyRepository
+    private val discountPolicyRepository: DiscountPolicyRepository,
 ) {
 
     fun findById(id: Long?): Optional<DiscountPolicy> {
@@ -14,5 +14,4 @@ class DiscountPolicySelector(
         }
         return discountPolicyRepository.findById(id)
     }
-
 }

@@ -1,6 +1,5 @@
 package com.performance.web.api.reservation.service.dto
 
-
 data class ReservationCommand(
     val customerId: Long,
     val sessionId: Long,

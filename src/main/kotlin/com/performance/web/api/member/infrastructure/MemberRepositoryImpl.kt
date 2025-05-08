@@ -9,14 +9,10 @@ import java.util.*
 
 @Component
 class MemberRepositoryImpl(
-    private val memberJpaRepository: MemberJpaRepository
+    private val memberJpaRepository: MemberJpaRepository,
 ) : MemberRepository {
 
-    override fun findById(id: Long): Optional<Member> {
-        return memberJpaRepository.findById(id).map { it.toDomain() }
-    }
+    override fun findById(id: Long): Optional<Member> = memberJpaRepository.findById(id).map { it.toDomain() }
 
-    override fun save(member: Member): Member {
-        return memberJpaRepository.save(MemberEntity.fromDomain(member)).toDomain()
-    }
+    override fun save(member: Member): Member = memberJpaRepository.save(MemberEntity.fromDomain(member)).toDomain()
 }

@@ -15,7 +15,7 @@ class TicketIssuer(
     @Transactional()
     fun issue(
         commands: List<SeatReserveCommand>,
-        discountFactor: DiscountFactor
+        discountFactor: DiscountFactor,
     ): List<Ticket> {
         val tickets = mutableListOf<Ticket>()
 
@@ -31,5 +31,4 @@ class TicketIssuer(
         val seat: Seat,
         val discountPolicy: DiscountPolicy,
     )
-
 }

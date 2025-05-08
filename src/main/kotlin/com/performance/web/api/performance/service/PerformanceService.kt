@@ -11,11 +11,10 @@ import com.performance.web.api.performance.service.dto.PerformancePagingResponse
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
-
 @Service
 class PerformanceService(
     private val performanceRepository: PerformanceRepository,
-    private val discountPolicyRepository: DiscountPolicyRepository
+    private val discountPolicyRepository: DiscountPolicyRepository,
 ) {
     private val size = 20
 
@@ -26,7 +25,7 @@ class PerformanceService(
     }
 
     @Transactional(readOnly = true)
-    fun findByPaging(page:Int): PerformancePagingResponse {
+    fun findByPaging(page: Int): PerformancePagingResponse {
         val pagingResult = performanceRepository.findAllByPaging(page, size)
         return PerformancePagingResponse(pagingResult.first, pagingResult.second)
     }
@@ -38,21 +37,21 @@ class PerformanceService(
         val discounts: List<DiscountPolicy> =
             discountPolicyRepository.findAllByPerformanceSeatClassIds(performance.getSeatClasses().map { it.getId() })
 
-        val discountGroupByPerformanceIds: Map<Long, List<DiscountPolicy>> = discounts.groupBy {
-            it.getPerformanceSeatClassId()
-        }
+        val discountGroupByPerformanceIds: Map<Long, List<DiscountPolicy>> =
+            discounts.groupBy {
+                it.getPerformanceSeatClassId()
+            }
 
         return performance.getSeatClasses().map {
             PerformanceDiscountResponse(
                 performanceSeatClass = it,
-                discountPolies = discountGroupByPerformanceIds[it.getId()] ?: emptyList()
+                discountPolies = discountGroupByPerformanceIds[it.getId()] ?: emptyList(),
             )
         }
     }
 
-
     @Transactional
-    fun createPerformance(performanceCreateCommand: PerformanceCreateCommand) : Performance {
+    fun createPerformance(performanceCreateCommand: PerformanceCreateCommand): Performance {
         val performance = performanceCreateCommand.toEntity()
         return performanceRepository.save(performance)
     }

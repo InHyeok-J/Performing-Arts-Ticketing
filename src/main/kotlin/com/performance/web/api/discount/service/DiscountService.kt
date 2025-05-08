@@ -10,13 +10,12 @@ import org.springframework.stereotype.Service
 @Service
 class DiscountService(
     private val discountPolicyRepository: DiscountPolicyRepository,
-    private val performanceRepository: PerformanceRepository
+    private val performanceRepository: PerformanceRepository,
 ) {
 
-    fun findById(id: Long): DiscountPolicy =
-        discountPolicyRepository.findByIdThrown(id)
+    fun findById(id: Long): DiscountPolicy = discountPolicyRepository.findByIdThrown(id)
 
-    fun create(command : DiscountCreateCommand) : DiscountPolicy {
+    fun create(command: DiscountCreateCommand): DiscountPolicy {
         val performance = performanceRepository.findByIdThrown(command.performanceId)
         performance.checkClassId(command.seatClassId)
 

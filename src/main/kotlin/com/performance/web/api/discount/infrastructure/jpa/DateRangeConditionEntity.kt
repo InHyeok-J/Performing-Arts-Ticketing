@@ -14,16 +14,14 @@ class DateRangeConditionEntity(
     discountPolicyEntity: DiscountPolicyEntity? = null,
     @Column(nullable = true)
     var startDate: LocalDate,
-
     @Column(nullable = true)
     var endDate: LocalDate,
 ) : DiscountConditionEntity(id, discountPolicyEntity) {
 
-    override fun toDomain(): DiscountCondition {
-        return DateRangeCondition(
+    override fun toDomain(): DiscountCondition =
+        DateRangeCondition(
             id = id,
             startDate = startDate,
-            endDate = endDate
+            endDate = endDate,
         )
-    }
 }

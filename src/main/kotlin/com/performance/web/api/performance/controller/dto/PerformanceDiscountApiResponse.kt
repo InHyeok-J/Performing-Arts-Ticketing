@@ -5,10 +5,10 @@ import com.performance.web.api.discount.domain.DiscountPolicy
 import com.performance.web.api.performance.service.dto.PerformanceDiscountResponse
 
 data class PerformanceDiscountApiResponse(
-    val id : Long,
+    val id: Long,
     val seatClassType: String,
     val price: Long,
-    val discountInfo: List<DiscountInfoApiResponse>
+    val discountInfo: List<DiscountInfoApiResponse>,
 ) {
 
     companion object {
@@ -19,7 +19,7 @@ data class PerformanceDiscountApiResponse(
                 seatClassType = seatClass.getClassType(),
                 price = seatClass.getPrice().longValue(),
                 discountInfo = response.discountPolies.map { DiscountInfoApiResponse.from(it, seatClass.getPrice()) },
-                id = seatClass.getId()
+                id = seatClass.getId(),
             )
         }
     }
@@ -27,18 +27,19 @@ data class PerformanceDiscountApiResponse(
     data class DiscountInfoApiResponse(
         val id: Long,
         val name: String,
-        val fee: Long
+        val fee: Long,
     ) {
 
         companion object {
-            fun from(discountPolicy: DiscountPolicy, price: Money): DiscountInfoApiResponse {
-                return DiscountInfoApiResponse(
+            fun from(
+                discountPolicy: DiscountPolicy,
+                price: Money,
+            ): DiscountInfoApiResponse =
+                DiscountInfoApiResponse(
                     id = discountPolicy.getId(),
                     name = discountPolicy.getName(),
                     fee = discountPolicy.calculateDiscountAmountWithoutCondition(price).longValue(),
                 )
-            }
         }
     }
-
 }

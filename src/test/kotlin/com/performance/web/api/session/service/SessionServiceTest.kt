@@ -4,6 +4,7 @@ import com.performance.web.api.common.domain.BusinessException
 import com.performance.web.api.fixtures.PerformanceFixture
 import com.performance.web.api.fixtures.PerformanceSeatClassFixture
 import com.performance.web.api.mock.FakePerformanceRepository
+import com.performance.web.api.mock.FakeSessionQueryRepository
 import com.performance.web.api.mock.FakeSessionRepository
 import com.performance.web.api.session.domain.SessionRepository
 import com.performance.web.api.session.service.dto.SessionCreateCommand
@@ -22,41 +23,47 @@ class SessionServiceTest {
     fun setup() {
         sessionRepository = FakeSessionRepository()
         val performanceRepository = FakePerformanceRepository()
+        val sessionQueryRepository = FakeSessionQueryRepository()
         performanceRepository.save(
             PerformanceFixture.create(
-                seatClasses = listOf(
-                    PerformanceSeatClassFixture.create(),
-                ),
+                seatClasses =
+                    listOf(
+                        PerformanceSeatClassFixture.create(),
+                    ),
             ),
         )
 
-        sessionService = SessionService(sessionRepository, performanceRepository)
+        sessionService = SessionService(sessionRepository, performanceRepository, sessionQueryRepository)
     }
 
     @Test
     fun `존재하지 않는 공연으로 예매 생성시 예외를 반환한다`() {
-        //given
-        val command = SessionCreateCommand(
-            performanceId = 2L,
-            startDateTime = LocalDateTime.now()
-        )
+        // given
+        val command =
+            SessionCreateCommand(
+                performanceId = 2L,
+                startDateTime = LocalDateTime.now(),
+                endDateTime = LocalDateTime.now(),
+            )
 
-        //when
-        //then
+        // when
+        // then
         assertThatThrownBy {
             sessionService.create(command)
         }.isInstanceOf(BusinessException::class.java)
     }
 
     @Test
-    fun `회차를 생성할 수 있다`(){
-        //given
-        val command = SessionCreateCommand(
-            performanceId = 1L,
-            startDateTime = LocalDateTime.now()
-        )
+    fun `회차를 생성할 수 있다`() {
+        // given
+        val command =
+            SessionCreateCommand(
+                performanceId = 1L,
+                startDateTime = LocalDateTime.now(),
+                endDateTime = LocalDateTime.now(),
+            )
 
-        //when
+        // when
         val result = sessionService.create(command)
 
         assertThat(result.getId()).isEqualTo(1)

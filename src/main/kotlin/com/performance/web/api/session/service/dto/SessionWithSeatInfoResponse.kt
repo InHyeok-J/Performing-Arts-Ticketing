@@ -6,13 +6,11 @@ data class SessionWithSeatInfoResponse(
     val id: Long,
     val startDateTime: LocalDateTime,
     val endDateTime: LocalDateTime,
-    val seatCurrentStatus: List<SeatCurrentStatus>
+    val seatCurrentStatus: List<SeatCurrentStatus>,
 ) {
 
     data class SeatCurrentStatus(
         val classType: String,
-        val remain: Long
+        val remain: Long,
     )
-
-
 }
