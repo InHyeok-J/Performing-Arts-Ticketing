@@ -7,6 +7,7 @@ import com.performance.web.api.member.domain.MemberRepository
 import com.performance.web.api.performance.domain.PerformanceRepository
 import com.performance.web.api.reservation.domain.*
 import com.performance.web.api.reservation.service.dto.ReservationCommand
+import com.performance.web.api.reservation.service.dto.ReservationConfirmDto
 import com.performance.web.api.seat.domain.SeatRepository
 import com.performance.web.api.session.domain.SessionRepository
 import org.springframework.stereotype.Service
@@ -22,7 +23,8 @@ class ReservationService(
     private val memberRepository: MemberRepository,
     private val discountPolicySelector: DiscountPolicySelector,
     private val ticketIssuer: TicketIssuer,
-    private val reservationSaver: ReservationSaver
+    private val reservationSaver: ReservationSaver,
+    private val reservationConfirmNotifier: ReservationConfirmNotifier,
 ) {
 
     fun reserve(reservationCommand: ReservationCommand): Reservation {
@@ -43,7 +45,7 @@ class ReservationService(
                 commands = convertSeatReserveCommandList(reservationCommand.seatCommands),
             )
 
-        return reservationSaver.saveAndRetry(
+        val reservation = reservationSaver.saveAndRetry(
             command = ReservationSaver.ReservationSaveCommand(
                 sessionId = session.getId(),
                 performanceSessionInfo = PerformanceSessionInfo.create(performance, session),
@@ -51,6 +53,12 @@ class ReservationService(
                 tickets = tickets,
             ),
         )
+
+        reservationConfirmNotifier.notify(
+            confirmDto = ReservationConfirmDto.from(reservation, member, performance)
+        )
+
+        return reservation
     }
 
     private fun convertSeatReserveCommandList(

@@ -24,6 +24,7 @@ class ReservationServiceTest {
 
     private lateinit var reservationService: ReservationService
     private lateinit var reservationRepository: ReservationRepository
+    private lateinit var fakeReservationConfirmNotifier: FakeReservationConfirmNotifier
 
     @BeforeEach
     fun initReservationService() {
@@ -35,6 +36,7 @@ class ReservationServiceTest {
         reservationRepository = FakeReservationRepository()
         val discountPolicySelector = DiscountPolicySelector(discountPolicyRepository)
         val ticketIssuer = TicketIssuer(seatRepository)
+        fakeReservationConfirmNotifier = FakeReservationConfirmNotifier()
 
         memberRepository.save(Member(name = "김철수", email = "email"))
         sessionRepository.save(
@@ -95,6 +97,7 @@ class ReservationServiceTest {
                     reservationRepository = reservationRepository,
                     reservationCodeGenerator = TodayBasedRandomStringReservationCodeGenerator(),
                 ),
+                reservationConfirmNotifier = fakeReservationConfirmNotifier
             )
     }
 
@@ -125,6 +128,7 @@ class ReservationServiceTest {
         assertThat(result.getId()).isEqualTo(1L)
         assertThat(result.getTickets().size).isEqualTo(2)
         assertThat(result.getTotalAmount()).isEqualTo(Money.of(10000))
+        assertThat(fakeReservationConfirmNotifier.isSend()).isTrue()
     }
 
     @Test

@@ -34,7 +34,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("io.github.oshai:kotlin-logging-jvm:5.1.0")
-
+    implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
+    implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
 
     runtimeOnly("com.mysql:mysql-connector-j")

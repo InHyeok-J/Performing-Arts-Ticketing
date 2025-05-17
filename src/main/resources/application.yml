@@ -12,6 +12,15 @@ spring:
 #        show_sql: true
 #        format_sql: true
         default_batch_fetch_size: 100
+  mail:
+    host: ${MAIL_HOST}
+    port: ${MAIL_PORT}
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: false
 
 #logging:
 #  level:

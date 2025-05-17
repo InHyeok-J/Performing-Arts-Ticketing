@@ -1,6 +1,8 @@
 package com.performance.web.api.common.domain
 
 import java.math.BigDecimal
+import java.text.NumberFormat
+import java.util.Locale
 import java.util.Objects
 
 data class Money(
@@ -47,7 +49,9 @@ data class Money(
 
     override fun hashCode(): Int = Objects.hash(amount.toDouble())
 
-    override fun toString(): String = this.amount.toString() + " 원"
+    override fun toString(): String  {
+        return NumberFormat.getNumberInstance(Locale.KOREA).format(amount).toString()
+    }
 }
 
 fun List<Money>.sum(): Money =

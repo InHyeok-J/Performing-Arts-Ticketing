@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>예매 확정 안내</title>
+</head>
+<body style="font-family: 'Apple SD Gothic Neo', sans-serif; font-size: 14px; color: #333; padding: 20px; background-color: #f8f8f8;">
+
+<div style="max-width: 700px; margin: 0 auto; background-color: #ffffff; padding: 30px; border: 1px solid #ddd; border-radius: 6px;">
+
+    <h2 style="margin-top: 0; color: #222;">예매 확정 안내</h2>
+
+    <p>
+        안녕하세요, <strong th:text="${dto.customerName} + '님'"></strong><br />
+        예매가 성공적으로 완료되었습니다.
+    </p>
+
+    <hr style="margin: 20px 0;" />
+
+    <h4>공연 정보</h4>
+
+    <!-- 포스터 + 공연/예매 정보 -->
+    <div style="display: flex; gap: 20px; align-items: flex-start; margin-top: 10px;">
+
+        <!-- 포스터 영역 -->
+        <div style="flex: 0 0 180px;">
+            <img th:src="${dto.confirmPerformanceDto.performancePosterUrl}"
+                 alt="공연 포스터"
+                 style="width: 100%; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+
+        <!-- 공연 및 예매 정보 영역 -->
+        <div style="flex: 1;">
+            <p>공연명: <strong th:text="${dto.confirmPerformanceDto.performanceName}"></strong></p>
+            <p>
+                공연 시간:
+                <span th:text="${dto.confirmPerformanceDto.sessionStartDate}"></span>
+                &nbsp;
+                <span th:text="${dto.confirmPerformanceDto.sessionStartTime}"></span>
+                ~
+                <span th:text="${dto.confirmPerformanceDto.sessionEndTime}"></span>
+            </p>
+            <p>예매번호: <strong th:text="${dto.reservationId}"></strong></p>
+            <p>결제 금액: <strong th:text="${dto.totalAmount}"></strong></p>
+        </div>
+
+    </div>
+
+    <hr style="margin: 30px 0;" />
+
+    <h4>예매 좌석 정보</h4>
+
+    <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
+        <thead>
+        <tr style="background-color: #f2f2f2;">
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">좌석 등급</th>
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">위치</th>
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">정가</th>
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">할인</th>
+            <th style="text-align: left; padding: 8px; border-bottom: 1px solid #ccc;">최종 금액</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="ticket : ${dto.confirmTicketDtoList}">
+            <td style="padding: 8px;" th:text="${ticket.seatType}"></td>
+            <td style="padding: 8px;">
+                <span th:text="${ticket.floor} + '층 '"></span>
+                <span th:text="${ticket.row} + '행 '"></span>
+                <span th:text="${ticket.column} + '열'"></span>
+            </td>
+            <td style="padding: 8px;" th:text="${ticket.regularPrice}"></td>
+            <td style="padding: 8px;" th:text="${ticket.discountName}"></td>
+            <td style="padding: 8px;" th:text="${ticket.totalAmount}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div style="margin-top: 30px;">
+        <a href="https://yourdomain.com/reservation"
+           style="display: inline-block; padding: 10px 20px; background-color: #007bff; color: white; text-decoration: none; border-radius: 4px;">
+            예매 내역 확인하기
+        </a>
+    </div>
+
+</div>
+
+</body>
+</html>
