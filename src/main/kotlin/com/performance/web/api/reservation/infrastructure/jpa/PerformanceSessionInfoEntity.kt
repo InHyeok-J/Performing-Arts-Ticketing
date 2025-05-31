@@ -9,6 +9,10 @@ import java.time.LocalTime
 @Embeddable
 class PerformanceSessionInfoEntity(
     @Column(nullable = false)
+    var sessionId: Long,
+    @Column(nullable = false)
+    var performanceId: Long,
+    @Column(nullable = false)
     var performanceName: String,
     @Column(nullable = false)
     var sessionStartDate: LocalDate,
@@ -24,6 +28,8 @@ class PerformanceSessionInfoEntity(
             sessionStartDate = sessionStartDate,
             sessionStartTime = sessionStartTime,
             sessionEndTime = sessionEndTime,
+            sessionId = sessionId,
+            performanceId = performanceId,
         )
 
     companion object {
@@ -33,6 +39,8 @@ class PerformanceSessionInfoEntity(
                 sessionStartDate = performanceSessionInfo.sessionStartDate,
                 sessionStartTime = performanceSessionInfo.sessionStartTime,
                 sessionEndTime = performanceSessionInfo.sessionEndTime,
+                sessionId = performanceSessionInfo.sessionId,
+                performanceId = performanceSessionInfo.performanceId
             )
     }
 }

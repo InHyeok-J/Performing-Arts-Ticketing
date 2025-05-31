@@ -13,25 +13,26 @@ class ReservationFixture {
     companion object {
 
         fun create(
-            id : Long = 0L,
+            id: Long = 0L,
             reservationCode: String = UUID.randomUUID().toString(),
-            sessionId : Long = 0L,
+            sessionId: Long = 0L,
             performanceSessionInfo: PerformanceSessionInfo = PerformanceSessionInfo(
                 performanceName = "name",
                 sessionStartDate = LocalDate.now(),
-                sessionStartTime = LocalTime .now(),
-                sessionEndTime = LocalTime .now(),
-            ),
-            customer : Customer = Customer(id),
+                sessionStartTime = LocalTime.now(),
+                sessionEndTime = LocalTime.now(),
+                performanceId = 1L,
+                sessionId = 1L
+                ),
+            customer: Customer = Customer(id),
             tickets: List<Ticket> = listOf<Ticket>()
         ): Reservation =
             Reservation(
                 id = id,
                 reservationCode = reservationCode,
-                sessionId = sessionId,
                 performanceSessionInfo = performanceSessionInfo,
                 customer = customer,
-                tickets = tickets
+                tickets = tickets,
             )
     }
 }

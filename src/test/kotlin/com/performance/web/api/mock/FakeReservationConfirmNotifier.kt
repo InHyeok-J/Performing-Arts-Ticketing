@@ -1,7 +1,7 @@
 package com.performance.web.api.mock
 
-import com.performance.web.api.reservation.service.ReservationConfirmNotifier
-import com.performance.web.api.reservation.service.dto.ReservationConfirmDto
+import com.performance.web.api.notification.service.ReservationConfirmNotifier
+import com.performance.web.api.notification.service.dto.ReservationConfirmDto
 
 class FakeReservationConfirmNotifier : ReservationConfirmNotifier {
 

@@ -1,8 +1,8 @@
-package com.performance.web.api.reservation.infrastructure.notifier
+package com.performance.web.api.notification.infrastructure.notifier
 
-import com.performance.web.api.reservation.infrastructure.mail.MailTemplateRenderer
-import com.performance.web.api.reservation.service.ReservationConfirmNotifier
-import com.performance.web.api.reservation.service.dto.ReservationConfirmDto
+import com.performance.web.api.notification.infrastructure.mail.MailTemplateRenderer
+import com.performance.web.api.notification.service.ReservationConfirmNotifier
+import com.performance.web.api.notification.service.dto.ReservationConfirmDto
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Component

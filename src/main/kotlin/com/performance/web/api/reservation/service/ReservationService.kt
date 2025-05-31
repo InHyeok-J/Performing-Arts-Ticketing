@@ -4,12 +4,13 @@ import com.performance.web.api.common.domain.ResourceNotFoundException
 import com.performance.web.api.discount.domain.DiscountFactor
 import com.performance.web.api.discount.domain.DiscountPolicySelector
 import com.performance.web.api.member.domain.MemberRepository
+import com.performance.web.api.notification.service.ReservationConfirmNotifier
 import com.performance.web.api.performance.domain.PerformanceRepository
 import com.performance.web.api.reservation.domain.*
 import com.performance.web.api.reservation.service.dto.ReservationCommand
-import com.performance.web.api.reservation.service.dto.ReservationConfirmDto
 import com.performance.web.api.seat.domain.SeatRepository
 import com.performance.web.api.session.domain.SessionRepository
+import org.springframework.context.ApplicationEventPublisher
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 import java.time.LocalDateTime
@@ -24,7 +25,7 @@ class ReservationService(
     private val discountPolicySelector: DiscountPolicySelector,
     private val ticketIssuer: TicketIssuer,
     private val reservationSaver: ReservationSaver,
-    private val reservationConfirmNotifier: ReservationConfirmNotifier,
+    private val eventPublisher: ApplicationEventPublisher
 ) {
 
     fun reserve(reservationCommand: ReservationCommand): Reservation {
@@ -47,16 +48,13 @@ class ReservationService(
 
         val reservation = reservationSaver.saveAndRetry(
             command = ReservationSaver.ReservationSaveCommand(
-                sessionId = session.getId(),
                 performanceSessionInfo = PerformanceSessionInfo.create(performance, session),
                 customer = Customer(member.getId()),
                 tickets = tickets,
             ),
         )
 
-        reservationConfirmNotifier.notify(
-            confirmDto = ReservationConfirmDto.from(reservation, member, performance)
-        )
+        eventPublisher.publishEvent(ReservationConfirmEvent(reservation, performance, member))
 
         return reservation
     }

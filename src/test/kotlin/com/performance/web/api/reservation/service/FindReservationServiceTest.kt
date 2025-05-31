@@ -40,13 +40,14 @@ class FindReservationServiceTest {
         // givne
         reservationRepository.save(
             Reservation(
-                sessionId = 1L,
                 performanceSessionInfo =
                     PerformanceSessionInfo(
                         performanceName = "공연",
                         sessionStartDate = LocalDate.now(),
                         sessionStartTime = LocalTime.now(),
                         sessionEndTime = LocalTime.now(),
+                        sessionId = 1L,
+                        performanceId = 1L
                     ),
                 customer = Customer(1L),
                 tickets =

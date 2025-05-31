@@ -15,7 +15,6 @@ class FakeReservationRepository : ReservationRepository {
         val newReservation =
             Reservation(
                 id = if (reservation.getId() == 0L) autoIncrementId++ else reservation.getId(),
-                sessionId = reservation.getSessionId(),
                 performanceSessionInfo = reservation.getPerformanceSessionInfo(),
                 customer = reservation.getCustomer(),
                 tickets =

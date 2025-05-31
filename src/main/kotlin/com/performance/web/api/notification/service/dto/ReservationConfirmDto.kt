@@ -1,4 +1,4 @@
-package com.performance.web.api.reservation.service.dto
+package com.performance.web.api.notification.service.dto
 
 import com.performance.web.api.common.domain.Money
 import com.performance.web.api.member.domain.Member
@@ -9,6 +9,7 @@ import java.time.LocalTime
 
 data class ReservationConfirmDto(
     val reservationId: Long,
+    val reservationCode: String,
     val customerId: Long,
     val customerName: String,
     val customerEmail: String,
@@ -42,6 +43,7 @@ data class ReservationConfirmDto(
 
             return ReservationConfirmDto(
                 reservationId = reservation.getId(),
+                reservationCode = reservation.getReservationCode(),
                 customerId = member.getId(),
                 customerName = member.getName(),
                 customerEmail = member.getEmail(),

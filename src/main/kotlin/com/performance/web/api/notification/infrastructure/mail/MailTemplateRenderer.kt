@@ -1,4 +1,4 @@
-package com.performance.web.api.reservation.infrastructure.mail
+package com.performance.web.api.notification.infrastructure.mail
 
 import org.springframework.stereotype.Component
 import org.thymeleaf.TemplateEngine

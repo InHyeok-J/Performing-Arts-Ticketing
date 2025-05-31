@@ -41,12 +41,13 @@ class ReservationSaverIntegrationTest(
         val duplicateCode = "DUPLICATE-CODE"
         val existingReservation = Reservation(
             reservationCode = duplicateCode,
-            sessionId = 1L,
             performanceSessionInfo = PerformanceSessionInfo(
                 performanceName = "name",
                 sessionStartDate = LocalDate.now(),
                 sessionStartTime = LocalTime.now(),
                 sessionEndTime = LocalTime.now(),
+                sessionId = 1L,
+                performanceId = 1L
             ),
             customer = Customer(1L),
             tickets = listOf(),
@@ -56,7 +57,6 @@ class ReservationSaverIntegrationTest(
         reservationRepository.save(existingReservation)
 
         val command = ReservationSaver.ReservationSaveCommand(
-            sessionId = 1L,
             performanceSessionInfo = existingReservation.getPerformanceSessionInfo(),
             customer = Customer(1L),
             tickets = listOf(),
@@ -75,12 +75,13 @@ class ReservationSaverIntegrationTest(
 
 
         val command = ReservationSaver.ReservationSaveCommand(
-            sessionId = 1L,
             performanceSessionInfo = PerformanceSessionInfo(
                 performanceName = "name",
                 sessionStartDate = LocalDate.now(),
                 sessionStartTime = LocalTime.now(),
                 sessionEndTime = LocalTime.now(),
+                sessionId = 1L,
+                performanceId = 1L
             ),
             customer = Customer(1L),
             tickets = listOf(),

@@ -37,7 +37,6 @@ class ReservationSaverTest {
         val reservation = ReservationFixture.create()
 
         val command = ReservationSaver.ReservationSaveCommand(
-            sessionId = reservation.getSessionId(),
             performanceSessionInfo = reservation.getPerformanceSessionInfo(),
             customer = reservation.getCustomer(),
             tickets = reservation.getTickets(),
@@ -64,7 +63,6 @@ class ReservationSaverTest {
         val reservation = ReservationFixture.create()
 
         val command = ReservationSaver.ReservationSaveCommand(
-            sessionId = reservation.getSessionId(),
             performanceSessionInfo = reservation.getPerformanceSessionInfo(),
             customer = reservation.getCustomer(),
             tickets = reservation.getTickets(),

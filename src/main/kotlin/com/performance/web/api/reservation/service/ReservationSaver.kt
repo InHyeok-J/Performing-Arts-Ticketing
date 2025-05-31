@@ -27,7 +27,6 @@ class ReservationSaver(
             val code = reservationCodeGenerator.generate()
             val reservation = Reservation(
                 reservationCode = code,
-                sessionId = command.sessionId,
                 performanceSessionInfo = command.performanceSessionInfo,
                 customer = command.customer,
                 tickets = command.tickets,
@@ -45,7 +44,6 @@ class ReservationSaver(
 
 
     data class ReservationSaveCommand(
-        val sessionId: Long,
         val performanceSessionInfo: PerformanceSessionInfo,
         val customer: Customer,
         val tickets: List<Ticket>
