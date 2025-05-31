@@ -37,6 +37,8 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-thymeleaf")
     implementation("org.springframework.boot:spring-boot-starter-mail")
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.15.0")
+    implementation("org.springframework.retry:spring-retry")
+    implementation("org.springframework.boot:spring-boot-starter-aop")
 
     runtimeOnly("com.mysql:mysql-connector-j")
 
